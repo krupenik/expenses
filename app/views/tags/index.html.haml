@@ -1,0 +1,5 @@
+- title "Tags"
+
+#tags
+  - @tags.each do |tag|
+    %span{:style => "font-size: #{10 + tag.taggings.size / 2}pt"}= link_to tag.name, tag

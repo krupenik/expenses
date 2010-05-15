@@ -1,0 +1,9 @@
+#header
+  = link_to 'Entries', entries_path
+  = link_to 'Calendar', calendar_entries_path
+  = link_to 'Tags', tags_path
+  
+- if @content_for_header
+  #header_contextual
+    = yield(:header)
+  

@@ -1,0 +1,16 @@
+.*.swp
+.DS_Store
+Capfile
+config/database.yml
+config/deploy.rb
+config/initializers/host_settings.rb
+config/mongrel_cluster.yml
+db/schema.rb
+log/*.log
+public/javascripts/cached_*.js
+public/sitemap.xml
+public/stylesheets/cached_*.css
+public/system
+script/restart
+script/sync_from_production
+tmp/*

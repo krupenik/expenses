@@ -1,0 +1,6 @@
+%tr{:class => ["expense", nil, "income"][(entry.amount <=> 0) + 1]}
+  %th= link_to entry.id, edit_entry_path(entry)
+  %td.date= entry.created_at
+  %td.amount= "%0.2f" % entry.amount
+  %td= entry.comment
+  %td= entry.tags.compact.map { |t| link_to t.name, t }.join(", ")
