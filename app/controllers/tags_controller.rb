@@ -1,11 +1,13 @@
 class TagsController < ApplicationController
+  before_filter :authenticate_user!
+
   def index
     @tags = Tag.all(:include => :taggings)
   end
   
   def show
-    @tag = Tag.find_by_name(params[:id])
-    @entries = @tag.entries
+    @tags = Tag.find_all_by_name(params[:id].split(/\s*,\s*/))
+    @entries = @tags.map(&:entries).inject([]) { |a, e| a = a.empty? ? e : a & e }
   end
   
   def new

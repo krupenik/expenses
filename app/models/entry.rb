@@ -4,11 +4,12 @@ class Entry < ActiveRecord::Base
   
   attr_accessible :amount, :comment, :created_at, :tag_names
   attr_writer :tag_names
+  after_save :assign_tags
+  serialize :edit_history, Array
 
   validates_numericality_of :amount, :on => :create, :message => "is not a number"
   validates_presence_of :comment, :on => :create, :message => "can't be blank"
   
-  after_save :assign_tags
   
   named_scope :created_at, lambda{ |*args|
     if args.empty?

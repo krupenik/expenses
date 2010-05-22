@@ -1,3 +1,8 @@
 - title 'Edit Entry'
 
 = render 'form'
+
+%h3 Edit History
+%ul
+  - @entry.edit_history.each do |user_id, time|
+    %li= "#{User.find(user_id).email} at #{time.strftime("%F %T")}"

@@ -1,7 +1,9 @@
-#header
-  = link_to 'Entries', entries_path
-  = link_to 'Calendar', calendar_entries_path
-  = link_to 'Tags', tags_path
+- if user_signed_in?
+  #header
+    = link_to 'Entries', entries_path
+    = link_to 'Calendar', calendar_entries_path
+    = link_to 'Tags', tags_path
+    = link_to 'Logout', destroy_user_session_path, :id => 'logout_link'
   
 - if @content_for_header
   #header_contextual

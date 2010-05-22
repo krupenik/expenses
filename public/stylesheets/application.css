@@ -1,4 +1,4 @@
-html, body, h1, div, p, a, img, form, table, tr, th, td { border: 0; padding: 0; margin: 0; }
+html, body, h1, h2, h3, div, p, a, img, form, fieldset, ol, ul, li, table, tr, th, td { border: 0; padding: 0; margin: 0; }
 input, select { padding: 0; margin: 0; }
 
 .clear { clear: both; height: 0; overflow: hidden; }
@@ -6,7 +6,7 @@ input, select { padding: 0; margin: 0; }
 body
 {
   background-color: #fff;
-  font: 10pt/12pt "Lucida Grande", "Segoe UI", sans-serif;
+  font: 12pt/15pt "Lucida Grande", "Segoe UI", sans-serif;
 }
 
 a { color: #00c; text-decoration: none; }
@@ -20,7 +20,7 @@ form { text-align: center; }
   padding: 0 5px;
 }
 
-#flash_notice, #flash_error
+#flash_notice, #flash_error, #flash_alert
 {
   width: 60%;
   margin: 10px auto;
@@ -33,7 +33,7 @@ form { text-align: center; }
   border: solid 1px #6c6;
 }
 
-#flash_error
+#flash_error, #flash_alert
 {
   background-color: #fcc;
   border: solid 1px #c66;
@@ -53,7 +53,7 @@ form { text-align: center; }
   padding: 0px;
   padding-bottom: 12px;
   background-color: #f0f0f0;
-  font-size: 80%;
+  font-size: 0.8em;
 }
 
 #errorExplanation h2
@@ -64,7 +64,7 @@ form { text-align: center; }
   margin: 0;
   background-color: #c00;
   color: #fff;
-  font-size: 100%;
+  font-size: 1em;
 }
 
 #errorExplanation p
@@ -78,7 +78,7 @@ form { text-align: center; }
 
 h1 { text-align: center; margin: 20px; }
 
-input { font-size: 150%; }
+.new_entry input, .edit_entry input { font-size: 1.2em; line-height: 1.5em; } 
 #entry_comment { width: 40%; }
 #entry_tag_names { width: 20%; }
 
@@ -97,7 +97,7 @@ input { font-size: 150%; }
 }
 
 .grid, .grid thead th, .grid tfoot th { border: 1px solid #888; }
-.grid thead th, .grid tfoot th { font-size: 120%; padding: 4px; }
+.grid thead th, .grid tfoot th { font-size: 1.2em; padding: 4px; }
 
 .grid thead, .grid tfoot { background: #f0f0f0; }
 
@@ -106,10 +106,7 @@ input { font-size: 150%; }
 .grid .amount { width: 6em; text-align: right; }
 .grid .tags { width: 30%; }
 
-.grid thead tr .header {
-	background: #ddd url(/images/bg.gif) no-repeat center right;
-	cursor: pointer;
-}
+.grid thead tr .header { background: #ddd url(/images/bg.gif) no-repeat center right; cursor: pointer; }
 .grid thead tr .sort_asc { background: #ccc url(/images/asc.gif) no-repeat center right; }
 .grid thead tr .sort_desc { background: #ccc url(/images/desc.gif) no-repeat center right; }
 
@@ -121,19 +118,26 @@ input { font-size: 150%; }
 #calendar { margin: 20px auto; width: 71em; }
 #calendar #month { text-align: center; }
 #calendar table { border-collapse: collapse; width: 100%; }
-#calendar thead th { border: 1px solid #888; padding: 4px; background: #444; color: #fff; width: 14.2857142857143% }
+#calendar thead th
+{
+  border: 1px solid #888;
+  padding: 4px;
+  background: #444;
+  color: #fff;
+  width: 14.2857142857143%
+}
 #calendar td { border: 1px solid #888; height: 5em; }
 #calendar .weekend { background: #ccc; }
 #calendar .today { background: #aaf; }
 #calendar .day
 {
   float: left;
-  margin: -2em 0 0 -1px;
+  margin: -1.95em 0 0 -1px;
   padding: 2px;
   border: 1px solid #888;
   background: #ccc;
 }
-#calendar .sum { text-align: center; font-size: 150%; }
+#calendar .sum { text-align: center; font-size: 1.5em; }
 #calendar .sum a { color: #00c; text-decoration: none; }
 #calendar .sum.income a { color: #0c0; }
 #calendar .sum.expense a { color: #c00; }
@@ -141,7 +145,7 @@ input { font-size: 150%; }
 
 #header, #header_contextual
 {
-  font-size: 80%;
+  font-size: 0.8em;
   text-align: right;
   padding: 3px 10px;
   border-bottom: 1px solid #696969;
@@ -160,7 +164,24 @@ input { font-size: 150%; }
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
 }
-
 #header a:hover, #header_contextual a:hover { border: 1px solid #717171; background: #8c8c8c; }
+#header #logout_link { color: #800; }
+#header #logout_link:hover { border: 1px solid #800; background: #ac8c8c; }
+
 
 #tags a { color: #000; }
+
+#login_form
+{
+  width: 600px;
+  margin: auto;
+}
+#login_form ol { list-style: none; margin-top: 0.5em; }
+#login_form li { margin-bottom: 0.8em; }
+#login_form label { float: left; width: 23%; text-align: right; margin-right: 0.5em; padding-bottom: 0.2em; }
+#login_form input { font-size: 1.2em; line-height: 1.5em; }
+#login_form .inputs input { width: 74%; }
+
+h2 { margin: 0.5em; }
+h3 { margin-top: 3em; margin-bottom: 0.5em; }
+ul { margin-left: 2em; }

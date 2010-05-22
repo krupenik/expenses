@@ -1,0 +1,16 @@
+- title "Log in"
+
+- form_for resource_name, resource, :url => session_path(resource_name), :html => {:id => 'login_form'} do |f|
+  = f.hidden_field :remember_me, {:value => true}
+  %fieldset.inputs
+    %ol
+      %li
+        = f.label :email
+        = f.text_field :email
+      %li
+        = f.label :password
+        = f.password_field :password
+
+  %fieldset.buttons
+    %ol
+      %li= f.submit "Log in"

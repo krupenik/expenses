@@ -1,6 +1,9 @@
 - title "Calendar"
 - @date ||= Date.today
 
+- content_for(:header) do
+  = render 'form'
+
 #calendar
   #month
     %h2= @date.strftime("%B %Y")
