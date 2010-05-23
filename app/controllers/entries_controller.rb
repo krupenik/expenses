@@ -2,7 +2,7 @@ class EntriesController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @entries = Entry.scoped(:include => :tags, :order => 'id desc', :limit => 50)
+    @entries = Entry.scoped(:include => :tags, :order => 'id desc')
     
     if params[:f_date]
       begin
