@@ -78,7 +78,7 @@ form { text-align: center; }
 
 h1 { text-align: center; margin: 20px; }
 
-.new_entry input, .edit_entry input { font-size: 1.2em; line-height: 1.5em; } 
+.new_entry input, .edit_entry input { font-size: 1.2em; padding: 2px; }
 #entry_comment { width: 40%; }
 #entry_tag_names { width: 20%; }
 
@@ -179,9 +179,10 @@ h1 { text-align: center; margin: 20px; }
 #login_form ol { list-style: none; margin-top: 0.5em; }
 #login_form li { margin-bottom: 0.8em; }
 #login_form label { float: left; width: 23%; text-align: right; margin-right: 0.5em; padding-bottom: 0.2em; }
-#login_form input { font-size: 1.2em; line-height: 1.5em; }
+#login_form input { font-size: 1.2em; padding: 5px; }
 #login_form .inputs input { width: 74%; }
 
 h2 { margin: 0.5em; }
+h2 a { margin: 0.5em; }
 h3 { margin-top: 3em; margin-bottom: 0.5em; }
 ul { margin-left: 2em; }

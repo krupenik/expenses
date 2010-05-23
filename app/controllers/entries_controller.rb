@@ -5,12 +5,19 @@ class EntriesController < ApplicationController
     @entries = Entry.scoped(:include => :tags, :order => 'id desc', :limit => 50)
     
     if params[:f_date]
-      @entries = @entries.created_at(params[:f_date])
+      begin
+        @date = Date.strptime(params[:f_date], "%Y-%m-%d")
+        @entries = @entries.created_at(@date)
+      rescue ArgumentError
+        @date = Date.strptime(params[:f_date], "%Y-%m")
+        @entries = @entries.created_at(@date.beginning_of_month, @date.end_of_month)
+      end
     end
   end
   
   def calendar
-    @entries = Entry.all
+    @date = params[:date] ? Date.strptime(params[:date], "%Y-%m") : Date.today
+    @entries = Entry.created_at(@date.beginning_of_month, @date.end_of_month)
   end
   
   def new
