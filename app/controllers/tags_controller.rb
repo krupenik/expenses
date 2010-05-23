@@ -6,8 +6,15 @@ class TagsController < ApplicationController
   end
   
   def show
-    @tags = Tag.find_all_by_name(params[:id].split(/\s*,\s*/))
-    @entries = @tags.map(&:entries).inject([]) { |a, e| a = a.empty? ? e : a & e }
+    if params[:id] =~ /\|/
+      @tags = Tag.find_all_by_name(params[:id].split(/\s*\|\s*/))
+      @entries = @tags.map(&:entries).flatten.uniq
+      @join_op = " | "
+    else
+      @tags = Tag.find_all_by_name(params[:id].split(/\s*,\s*/))
+      @entries = @tags.map(&:entries).inject([]) { |a, e| a = a.empty? ? e : a & e }
+      @join_op = " & "
+    end
   end
   
   def new

@@ -1,3 +1,3 @@
-- title "Tags: #{@tags.map(&:name).join(", ")}"
+- title "Tags: #{@tags.map(&:name).join(@join_op)}"
 
 = render 'entries/list'

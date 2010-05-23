@@ -10,7 +10,6 @@ class Entry < ActiveRecord::Base
   validates_numericality_of :amount, :on => :create, :message => "is not a number"
   validates_presence_of :comment, :on => :create, :message => "can't be blank"
   
-  
   named_scope :created_at, lambda{ |*args|
     if args.empty?
       {}
@@ -25,6 +24,10 @@ class Entry < ActiveRecord::Base
     end
   }
   
+  def initialize
+    self.edit_history ||= []
+  end
+
   def tag_names
     @tag_names || tags.map(&:name).join(", ")
   end
