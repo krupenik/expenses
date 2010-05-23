@@ -24,7 +24,8 @@ class Entry < ActiveRecord::Base
     end
   }
   
-  def initialize
+  def initialize(*params)
+    super(*params)
     self.edit_history ||= []
   end
 
