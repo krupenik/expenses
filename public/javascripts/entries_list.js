@@ -48,6 +48,13 @@ $(function() {
     cssDesc: 'sort_desc',
     sortList: [[sort_by['column'], sort_by['order']]],
     widgets: ["zebra"],
+    headers: {
+      0: { sorter: 'digit' },
+      1: { sorter: 'isoDate' },
+      2: { sorter: 'digit' },
+      3: { sorter: 'text' },
+      4: { sorter: 'text' },
+    }
   }).bind("sortEnd", function(e) {
     if (1 < this.config.sortList.length) { return; } // prevent hash change for multisort
 

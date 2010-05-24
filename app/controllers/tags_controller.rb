@@ -20,8 +20,12 @@ class TagsController < ApplicationController
         case i
         when /[!|,]/
           o1 = stack.pop
+          if o1.nil?: raise ExpressionParseError, "missing arguments to '#{i}'"; end
           o2 = stack.pop
-          if o2.nil?: raise ExpressionParseError, "missing second argument to '#{i}'"; end
+          if o2.nil?
+             if i != '!': raise ExpressionParseError, "missing second argument to '#{i}'"; end
+             o2 = Entry.all(:include => :tags)
+          end
           case i
           when '!' then stack << (o2 - o1)
           when '|' then stack << (o2 + o1)
