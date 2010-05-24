@@ -87,7 +87,9 @@ class TagsController < ApplicationController
             if ops.empty?: raise ExpressionParseError, "'#{s}' contains unbalanced parentheses"; end
           end
           ops.pop
-        when /[!|,]/ then ops << i
+        when /[!|,]/
+          while ops.last =~ /[!|,]/: ret << ops.pop; end
+          ops << i
         end
       else
         ret << i
