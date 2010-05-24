@@ -17,14 +17,15 @@ class EntriesController < ApplicationController
       when 'yesterday' then e.created_at(Date.yesterday)
       when 'today' then e.created_at(Date.today)
       else
-        params[:f_created_at] = 'date'
         if params[:f_created_at] =~ /^\d{4}\-\d{2}$/
           d = Date.strptime(params[:f_created_at], "%Y-%m")
+          params[:f_created_at] = 'date'
           params[:f_created_at_s] = d.beginning_of_month
           params[:f_created_at_f] = d.end_of_month
           e.created_at(params[:f_created_at_s], params[:f_created_at_f])
         elsif params[:f_created_at] =~ /^\d{4}\-\d{2}\-\d{2}$/
           d = Date.strptime(params[:f_created_at], "%Y-%m-%d")
+          params[:f_created_at] = 'date'
           params[:f_created_at_s] = d
           params[:f_created_at_f] = d
           e.created_at(params[:f_created_at_s])
