@@ -24,6 +24,9 @@ class Entry < ActiveRecord::Base
     end
   }
   
+  named_scope :expenses, :conditions => "amount < 0"
+  named_scope :incomings, :conditions => "amount > 0"
+
   def initialize(*params)
     super(*params)
     self.edit_history ||= []

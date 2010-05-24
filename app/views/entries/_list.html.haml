@@ -1,3 +1,21 @@
+- javascript 'entries_list'
+
+- form_tag entries_url, :method => :get, :id => "filter_form" do
+  %table.grid#filter
+    %thead
+      %tr
+        %td
+          type:
+          = select_tag 'f_type', options_for_select([[nil], ['expenses'], ['incomings']], params[:f_type])
+
+          created:
+          = select_tag 'f_created_at', options_for_select([[nil], ['yesterday'], ['today'], ['week'], ['date']], params[:f_created_at])
+          %span#f_created_at_interval
+            = text_field_tag 'f_created_at_s', params[:f_created_at_s], :class => 'datepicker', :size => 10
+            = text_field_tag 'f_created_at_f', params[:f_created_at_f], :class => 'datepicker', :size => 10
+
+          = submit_tag 'apply', :id => 'filter_apply'
+
 %table.grid#entries
   %thead
     %tr
@@ -10,37 +28,5 @@
     = render @entries
   %tfoot
     %tr
-      %th
-      %th
-      %th.amount= "%0.2f" % @entries.map(&:amount).sum
-      %th
-      %th
-
-:javascript
-  $(function() {
-    var sort_by = {};
-    var sortable_by = ['id', 'created_at', 'amount', 'comment', 'tags'];
-    var sort_orders = ['desc', 'asc'];
-
-    sort_by['column'] = sortable_by.indexOf(document.location.hash.replace(/^#/, '').split(/\s*,/)[0]);
-    sort_by['order'] = sort_orders.indexOf(document.location.hash.split(/\s*,\s*/)[1]);
-
-    // default sort: created_at,desc
-    if (-1 == sort_by['column']) { sort_by['column'] = 1; }
-    if (-1 == sort_by['order']) { sort_by['order'] = 1; }
-
-    $("#entries").tablesorter({
-      cssAsc: 'sort_asc',
-      cssDesc: 'sort_desc',
-      sortList: [[sort_by['column'], sort_by['order']]],
-      widgets: ["zebra"],
-    }).bind("sortEnd", function(e) {
-      if (1 < this.config.sortList.length) { return; } // prevent hash change for multisort
-
-      var l = $(this.config.headerList);
-      l.each(function() {
-        var m = this.className.match(/sort_(asc|desc)/);
-        if (m) { document.location.hash = sortable_by[l.index(this)] + "," + m[1]; }
-      });
-    });  
-  });
+      %th.amount{:colspan => 5}
+        = [@entries.select{ |i| i.amount > 0 }, @entries.select{ |i| i.amount < 0 }, @entries].map{ |i| "%0.2f" % i.map(&:amount).sum }.join(", ")
