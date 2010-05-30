@@ -1,5 +1,10 @@
 - javascript 'entries_list'
 
+- incomings, expenses = [@entries.select{ |i| i.amount > 0 }, @entries.select{ |i| i.amount < 0 }].map{ |i| i.map(&:amount).sum.abs }
+%table.grid
+  %th.amount
+    = "%0.2f - %0.2f = %0.2f" % [incomings, expenses, incomings - expenses]
+
 - form_tag entries_url, :method => :get, :id => "filter_form" do
   %table.grid#filter
     %thead
@@ -29,9 +34,6 @@
     = render @entries
   %tfoot
     %tr
-      %th.amount{:colspan => 5}
-        - i, e = [@entries.select{ |i| i.amount > 0 }, @entries.select{ |i| i.amount < 0 }].map{ |i| i.map(&:amount).sum.abs }
-        = "%0.2f - %0.2f = %0.2f" % [i, e, i - e]
 
 - unless @entries.empty?
   %script{:type => 'text/javascript'}

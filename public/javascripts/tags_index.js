@@ -1,9 +1,7 @@
 $(function() {
   var $cloud = $("#cloud");
-  var max_value = 0;
 
   Array.prototype.max = function() { return Math.max.apply(Math, this); }
-
   function f_dec(n) { return n.toFixed(2); };
   function f_int(n) { return n | 0; };
 
