@@ -1,5 +1,20 @@
-- title "Tags"
+- title 'Tags'
+- javascript 'tags_index'
 
-#tags
-  - @tags.each do |tag|
-    %span{:style => "font-size: #{10 + tag.taggings.size / 2}pt"}= link_to tag.name, tag
+%script{:type => 'text/javascript'}
+  var tag_path = '#{tag_path('tag_name').sub(/tag_name/, '%s')}';
+  var tags = {
+  = @tags.map { |i| "#{i.id}: '#{i.name}'" }.join(", ")
+  }
+  var tags_appearance_rates = {
+  = @tags_appearance_rates.map { |k, v| "#{k}: #{v}" }.join(", ")
+  }
+  var tags_expenses = {
+  = @tags_expenses.map { |k, v| "#{k}: %0.2f" % v }.join(", ")
+  }
+
+#cloud_switcher
+  %span#by_appearance_rate by appearance rate
+  %span#by_expenses by expenses
+
+#cloud

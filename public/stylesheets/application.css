@@ -168,8 +168,6 @@ h1 { text-align: center; margin: 20px; }
 #header #logout_link:hover { border: 1px solid #800; background: #ac8c8c; }
 
 
-#tags a { color: #000; }
-
 #login_form
 {
   width: 600px;
@@ -197,4 +195,19 @@ ul { margin-left: 2em; }
 #filter select { margin: 3px; }
 #tags_filter_form input { padding: 3px; font-size: 1em; }
 
-#tags { padding: 20px; }
+#cloud { padding: 20px; line-height: 2.5em; }
+#cloud a { color: #000; white-space: nowrap; height: 0; margin: 0 0.1em; }
+#cloud_switcher { text-align: center; }
+#cloud_switcher span { cursor: pointer; margin: 0.5em; padding: 2px 6px; }
+#cloud_switcher .selected { background: #ebebaf; }
+
+.cl-0 { font-size: 1em; }
+.cl-1 { font-size: 1.25em; }
+.cl-2 { font-size: 1.5em; }
+.cl-3 { font-size: 1.75em; }
+.cl-4 { font-size: 2em; }
+.cl-5 { font-size: 2.25em; }
+.cl-6 { font-size: 2.5em; }
+.cl-7 { font-size: 2.75em; }
+.cl-8 { font-size: 3em; }
+.cl-9 { font-size: 3em; font-weight: bold; }

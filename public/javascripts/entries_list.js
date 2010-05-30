@@ -1,12 +1,15 @@
 $(function() {
   // filter form
-  $("#filter_form").submit(function() {
-    var url = this.action;
-    var query_string = $.param($.map($(this).serializeArray(), function(i) { return (i.value ? i : null)}));
-    query_string = query_string ? "?" + query_string : '';
-    document.location = url + query_string + document.location.hash;
-    return false;
-  });
+  if (!App.entries_filter_overridden) { // respect the environment
+    $("#filter_form").submit(function() {
+      var url = this.action;
+      var query_string = $.param($.map($(this).serializeArray(), function(i) { return (i.value ? i : null)}));
+      query_string = query_string ? "?" + query_string : '';
+      document.location = url + query_string + document.location.hash;
+      return false;
+    });
+    App.entries_filter_overridden = false;
+  }
 
   if ('date' != $("#f_created_at").val()) {
     $("#filter_apply").attr("disabled", true);
@@ -30,6 +33,20 @@ $(function() {
   });
 
   $("#f_type").change(function() { $(this.form).submit(); });
+  $("#filter_reset").click(function()
+  {
+    $(':input', $(this.form)).each(function() {
+        var type = this.type;
+        var tag = this.tagName.toLowerCase(); // normalize case
+        if (type == 'text' || type == 'password' || tag == 'textarea')
+          this.value = '';
+        else if (type == 'checkbox' || type == 'radio')
+          this.checked = false;
+        else if (tag == 'select')
+          this.selectedIndex = -1;
+    });
+    $(this.form).submit();
+  });
 
   // tablesorter
   var sort_by = {};

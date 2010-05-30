@@ -4,6 +4,8 @@ $.datepicker.setDefaults({
 });
 
 var App = {
+  entries_filter_overridden: false,
+
   init: function()
   {
     App.applyLayout(); $(window).resize(App.applyLayout);

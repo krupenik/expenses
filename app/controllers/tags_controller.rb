@@ -4,7 +4,9 @@ class TagsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @tags = Tag.all(:include => :taggings)
+    @tags = Tag.all(:include => [:taggings, :entries]).sort_by(&:name)
+    @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.taggings.size] }]
+    @tags_expenses = Hash[@tags.map{ |i| [i.id, i.entries.map{ |i| i.amount if i.amount < 0 }.compact.inject{ |a, e| a + e }.to_f.abs]}]
   end
   
   def show
@@ -12,7 +14,6 @@ class TagsController < ApplicationController
     @entries = []
     begin
       e = parse_tag_expr(@tag_list)
-      logger.debug(e.inspect)
       tags = Hash[Tag.find_all_by_name(e.reject{ |i| i =~ /[!\(\)|,]/ }.compact,
         :include => {:entries => :tags}).map{ |i| [i.name, i.entries] }]
       stack = []
@@ -36,6 +37,35 @@ class TagsController < ApplicationController
         end
       end
       @entries = stack.flatten.uniq
+
+      if 'expenses' == params[:f_type]
+        @entries.reject!{ |i| i.amount > 0 }
+      elsif 'incomings' == params[:f_type]
+        @entries.reject!{ |i| i.amount < 0 }
+      end
+
+      unless params[:f_created_at].blank?
+        case params[:f_created_at]
+        when 'date' then @entries.reject!{ |i| i.created_at < params[:f_created_at_s] || i.created_at > params[:f_created_at_f] }
+        when 'week' then @entries.reject!{ |i| i.created_at < Date.today.beginning_of_week || i.created_at > Date.today.end_of_week }
+        when 'yesterday' then @entries.reject!{ |i| i.created_at != Date.yesterday }
+        when 'today' then @entries.reject!{ |i| i.created_at != Date.today }
+        else
+          if params[:f_created_at] =~ /^\d{4}\-\d{2}$/
+            d = Date.strptime(params[:f_created_at], "%Y-%m")
+            params[:f_created_at] = 'date'
+            params[:f_created_at_s] = d.beginning_of_month
+            params[:f_created_at_f] = d.end_of_month
+            @entries.reject!{ |i| i.created_at < params[:f_created_at_s] || i.created_at > params[:f_created_at_f] }
+          elsif params[:f_created_at] =~ /^\d{4}\-\d{2}\-\d{2}$/
+            d = Date.strptime(params[:f_created_at], "%Y-%m-%d")
+            params[:f_created_at] = 'date'
+            params[:f_created_at_s] = d
+            params[:f_created_at_f] = d
+            @entries.reject!{ |i| i.created_at != params[:f_created_at_s] }
+          end
+        end
+      end
     rescue ExpressionParseError => e
       flash[:error] = "Expression parse error: #{e.to_s}"
     end

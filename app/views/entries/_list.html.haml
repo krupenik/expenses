@@ -15,6 +15,7 @@
             = text_field_tag 'f_created_at_f', params[:f_created_at_f], :class => 'datepicker', :size => 10
 
           = submit_tag 'apply', :id => 'filter_apply'
+          %input{:type => 'button', :value => 'reset', :id => 'filter_reset'}
 
 %table.grid#entries
   %thead
