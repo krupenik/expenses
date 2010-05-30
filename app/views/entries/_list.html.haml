@@ -30,4 +30,9 @@
   %tfoot
     %tr
       %th.amount{:colspan => 5}
-        = [@entries.select{ |i| i.amount > 0 }, @entries.select{ |i| i.amount < 0 }, @entries].map{ |i| "%0.2f" % i.map(&:amount).sum }.join(", ")
+        - i, e = [@entries.select{ |i| i.amount > 0 }, @entries.select{ |i| i.amount < 0 }].map{ |i| i.map(&:amount).sum.abs }
+        = "%0.2f - %0.2f = %0.2f" % [i, e, i - e]
+
+- unless @entries.empty?
+  %script{:type => 'text/javascript'}
+    App.entries_tablesorter = true;

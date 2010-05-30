@@ -4,6 +4,7 @@ $.datepicker.setDefaults({
 });
 
 var App = {
+  entries_tablesorter: false,
   entries_filter_overridden: false,
 
   init: function()

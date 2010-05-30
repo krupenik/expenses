@@ -4,8 +4,9 @@ $(function() {
     var url = this.action;
     var tags_string = $("#tags").val().replace(/\s*([()!|,])\s*/g, '$1');
     var query_string = $.param($.map($("#filter_form").serializeArray(), function(i) { return (i.value ? i : null)}));
-    query_string = query_string ? "?" + query_string : '';
-    document.location = url + "/" + tags_string + query_string + document.location.hash;
+    tags_string = tags_string ? "/" + tags_string : '';
+    query_string = tags_string ? query_string ? "?" + query_string : '' : '';
+    document.location = url + tags_string + query_string + (tags_string ? document.location.hash : '');
     return false;
   });
 
