@@ -36,6 +36,15 @@ class Entry < ActiveRecord::Base
     @tag_names || tags.map(&:name).join(", ")
   end
   
+  def amount=(amount)
+    if amount =~ /[\+\-\*\/\(\)]/
+      amount.gsub!(/[^\d\.\+\-\*\/\(\)]/, '')
+      write_attribute(:amount, eval(amount).to_f)
+    else
+      write_attribute(:amount, amount.to_f)
+    end
+  end
+
   private
   
   def assign_tags
