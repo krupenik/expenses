@@ -11,6 +11,7 @@ $(function() {
     App.entries_filter_overridden = false;
   }
 
+  if ('' == $("#f_created_at").val() && '' == $("#f_type").val()) { $("#filter_reset").attr("disabled", true); }
   if ('date' != $("#f_created_at").val()) {
     $("#filter_apply").attr("disabled", true);
     $("#f_created_at_interval").hide();    

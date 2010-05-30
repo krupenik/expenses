@@ -133,7 +133,7 @@ h1 { text-align: center; margin: 20px; }
 #calendar .day
 {
   float: left;
-  margin: -1.95em 0 0 -1px;
+  margin: -1.8em 0 0 -1px;
   padding: 2px;
   border: 1px solid #888;
   background: #ccc;
@@ -147,14 +147,13 @@ h1 { text-align: center; margin: 20px; }
 #header, #header_contextual
 {
   text-align: right;
+  text-shadow: #ccc 0 1px 1px;
   padding: 5px;
   border-bottom: 1px solid #696969;
   background: #9c9c9c;
 }
-
 #header_contextual { border-top: 1px solid #696969; margin: 1px 0; }
 #header_contextual form { text-align: right; }
-
 #header a, #header_contextual a
 {
   color: #000;
@@ -164,10 +163,15 @@ h1 { text-align: center; margin: 20px; }
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
 }
-#header a:hover, #header_contextual a:hover { border: 1px solid #717171; background: #8c8c8c; }
-#header #logout_link { color: #800; }
-#header #logout_link:hover { border: 1px solid #800; background: #ac8c8c; }
-
+#header a:hover, #header_contextual a:hover
+{
+  background: #8c8c8c;
+  border-left: 1px solid #444;
+  border-top: 1px solid #444;
+  border-right: 1px solid #888;
+  border-bottom: 1px solid #888;
+}
+#header #logout_link { color: #800; text-shadow: #caa 0 1px 1px; }
 
 #login_form
 {
