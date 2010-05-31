@@ -6,7 +6,7 @@ class TagsController < ApplicationController
   def index
     @tags = Tag.all(:include => [:taggings, :entries]).sort_by(&:name)
     @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.taggings.size] }]
-    @tags_expenses = Hash[@tags.map{ |i| [i.id, i.entries.map{ |i| i.amount if i.amount < 0 }.compact.inject{ |a, e| a + e }.to_f.abs]}]
+    @tags_expenses = Hash[@tags.map{ |i| [i.id, i.entries.map{ |i| i.amount if i.amount < 0 }.compact.inject{ |a, e| a + e }.to_f.abs]}].reject{ |k, v| 0 == v }
   end
   
   def show

@@ -25,11 +25,13 @@ $(function() {
 
     $cloud.html('');
     for (i in tags) {
-      a = $("<a class='cl-" + f_int(10 * (tags_data[i] - 1) / max_value) +
-        "' href='" + tag_path.replace("%s", tags[i]) + "'>" +
-        tags[i] + " (" + data_f(tags_data[i]) + ")</a>");
-      $cloud.append(a);
-      $cloud.append(" ");
+      if (tags_data[i]) {
+        a = $("<a class='cl-" + f_int(10 * (tags_data[i] - 1) / max_value) +
+          "' href='" + tag_path.replace("%s", tags[i]) + "'>" +
+          tags[i] + " (" + data_f(tags_data[i]) + ")</a>");
+        $cloud.append(a);
+        $cloud.append(" ");
+      }
     }
 
     $("#cloud_switcher span").removeClass("selected");
