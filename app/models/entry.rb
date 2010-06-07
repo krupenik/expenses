@@ -10,22 +10,24 @@ class Entry < ActiveRecord::Base
   validates_numericality_of :amount, :on => :create, :message => "is not a number"
   validates_presence_of :comment, :on => :create, :message => "can't be blank"
   
-  named_scope :created_at, lambda{ |*args|
+  named_scope :created_at, lambda{ |*args| {:conditions => created_at_conditions(*args)} }
+  
+  named_scope :expenses, :conditions => "amount < 0"
+  named_scope :incomings, :conditions => "amount > 0"
+  
+  def self.created_at_conditions(*args)
     if args.empty?
-      {}
+      nil
     elsif 1 == args.size
-      {:conditions => ["created_at = ?", args[0]]}
+      ["created_at = ?", args[0]]
     else
       (s, f) = args.flatten
       _conditions = []
       _conditions << "created_at >= ?" unless s.nil?
       _conditions << "created_at <= ?" unless f.nil?
-      {:conditions => [_conditions.join(" AND "), [s, f].compact].flatten}
+      [_conditions.join(" AND "), [s, f].compact].flatten
     end
-  }
-  
-  named_scope :expenses, :conditions => "amount < 0"
-  named_scope :incomings, :conditions => "amount > 0"
+  end
 
   def initialize(*params)
     super(*params)

@@ -4,13 +4,15 @@ class TagsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @tags = Tag.all(:include => [:taggings, :entries]).sort_by(&:name)
-    @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.taggings.size] }]
+    last_milestone_date = Milestone.last(:conditions => ["created_at < ?", Date.today]).created_at rescue nil
+    conditions = last_milestone_date ? ["entries.created_at > ?", last_milestone_date] : nil
+    @tags = Tag.all(:include => {:entries => :taggings}, :conditions => conditions).sort_by(&:name)
+    @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.entries.map(&:taggings).flatten.size] }]
     @tags_expenses = Hash[@tags.map{ |i| [i.id, i.entries.map{ |i| i.amount if i.amount < 0 }.compact.inject{ |a, e| a + e }.to_f.abs]}].reject{ |k, v| 0 == v }
   end
   
   def show
-    @tag_list = params[:id].gsub(/\s*([!|])\s*/, ' \1 ').gsub(/\s*,\s*/, ', ')
+    @tag_list = params[:id].gsub(/\s*([!|])\s*/, ' \1 ').gsub(/\s*,\s*/, '\1 ')
     @entries = []
     begin
       e = parse_tag_expr(@tag_list)

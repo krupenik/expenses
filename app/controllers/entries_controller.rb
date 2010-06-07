@@ -31,6 +31,11 @@ class EntriesController < ApplicationController
           e.created_at(params[:f_created_at_s])
         end
       end
+    else
+      @last_milestone = Milestone.last(:conditions => ["created_at < ?", Date.today])
+      if @last_milestone
+        e = e.created_at(@last_milestone.created_at + 1, nil)
+      end
     end
 
     @entries = e
