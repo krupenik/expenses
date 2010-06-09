@@ -78,9 +78,11 @@ th a { text-decoration: none; }
 
 h1 { text-align: center; margin: 20px; }
 
+.new_entry, .edit_entry { margin: 2px; }
 .new_entry input, .edit_entry input { font-size: 1.2em; padding: 2px; }
 #entry_comment { width: 40%; }
 #entry_tag_names { width: 20%; }
+#entry_submit { visibility: hidden; }
 
 .grid
 {

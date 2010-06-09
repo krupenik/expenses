@@ -4,8 +4,9 @@
 - if @last_milestone
   - incomings += @last_milestone.amount
 %table.grid
-  %th.amount
-    = "%0.2f - %0.2f = %0.2f" % [incomings, expenses, incomings - expenses]
+  %tr
+    %th.amount
+      = "%0.2f - %0.2f = %0.2f" % [incomings, expenses, incomings - expenses]
 
 - form_tag entries_url, :method => :get, :id => "filter_form" do
   %table.grid#filter

@@ -12,7 +12,7 @@ class TagsController < ApplicationController
   end
   
   def show
-    @tag_list = params[:id].gsub(/\s*([!|])\s*/, ' \1 ').gsub(/\s*,\s*/, '\1 ')
+    @tag_list = params[:id].gsub(/\s*([!|])\s*/, ' \1 ').gsub(/\s*(,)\s*/, '\1 ')
     @entries = []
     begin
       e = parse_tag_expr(@tag_list)
@@ -68,6 +68,7 @@ class TagsController < ApplicationController
           end
         end
       end
+      @entries.compact!
     rescue ExpressionParseError => e
       flash[:error] = "Expression parse error: #{e.to_s}"
     end
