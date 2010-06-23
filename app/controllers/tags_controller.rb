@@ -4,10 +4,8 @@ class TagsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    last_milestone_date = Milestone.last(:conditions => ["created_at < ?", Date.today]).created_at rescue nil
-    conditions = last_milestone_date ? ["entries.created_at > ?", last_milestone_date] : nil
-    @tags = Tag.all(:include => {:entries => :taggings}, :conditions => conditions).sort_by(&:name)
-    @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.entries.map(&:taggings).flatten.size] }]
+    @tags = Tag.all(:include => :entries, :conditions => Entry.created_at_conditions(*session[:context][:date][1])).sort_by(&:name)
+    @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.entries.size] }]
     @tags_expenses = Hash[@tags.map{ |i| [i.id, i.entries.map{ |i| i.amount if i.amount < 0 }.compact.inject{ |a, e| a + e }.to_f.abs]}].reject{ |k, v| 0 == v }
   end
   
@@ -17,18 +15,15 @@ class TagsController < ApplicationController
     begin
       e = parse_tag_expr(@tag_list)
       tags = Hash[Tag.find_all_by_name(e.reject{ |i| i =~ /[!\(\)|,]/ }.compact,
-        :include => {:entries => :tags}).map{ |i| [i.name, i.entries] }]
+        :include => {:entries => :tags}, :conditions => Entry.created_at_conditions(*session[:context][:date][1])
+        ).map{ |i| [i.name, i.entries] }]
       stack = []
       e.each do |i|
         case i
         when /[!|,]/
           o1 = stack.pop
-          if o1.nil?: raise ExpressionParseError, "missing arguments to '#{i}'"; end
           o2 = stack.pop
-          if o2.nil?
-             if i != '!': raise ExpressionParseError, "missing second argument to '#{i}'"; end
-             o2 = Entry.all(:include => :tags)
-          end
+          if o1.nil? or o2.nil?: raise ExpressionParseError, "missing arguments to '#{i}'"; end
           case i
           when '!' then stack << (o2 - o1)
           when '|' then stack << (o2 + o1)
@@ -40,34 +35,12 @@ class TagsController < ApplicationController
       end
       @entries = stack.flatten.uniq
 
-      if 'expenses' == params[:f_type]
+      if 'expenses' == session[:context][:type]
         @entries.reject!{ |i| i.amount > 0 }
-      elsif 'incomings' == params[:f_type]
+      elsif 'incomings' == session[:context][:type]
         @entries.reject!{ |i| i.amount < 0 }
       end
 
-      unless params[:f_created_at].blank?
-        case params[:f_created_at]
-        when 'date' then @entries.reject!{ |i| i.created_at < params[:f_created_at_s] || i.created_at > params[:f_created_at_f] }
-        when 'week' then @entries.reject!{ |i| i.created_at < Date.today.beginning_of_week || i.created_at > Date.today.end_of_week }
-        when 'yesterday' then @entries.reject!{ |i| i.created_at != Date.yesterday }
-        when 'today' then @entries.reject!{ |i| i.created_at != Date.today }
-        else
-          if params[:f_created_at] =~ /^\d{4}\-\d{2}$/
-            d = Date.strptime(params[:f_created_at], "%Y-%m")
-            params[:f_created_at] = 'date'
-            params[:f_created_at_s] = d.beginning_of_month
-            params[:f_created_at_f] = d.end_of_month
-            @entries.reject!{ |i| i.created_at < params[:f_created_at_s] || i.created_at > params[:f_created_at_f] }
-          elsif params[:f_created_at] =~ /^\d{4}\-\d{2}\-\d{2}$/
-            d = Date.strptime(params[:f_created_at], "%Y-%m-%d")
-            params[:f_created_at] = 'date'
-            params[:f_created_at_s] = d
-            params[:f_created_at_f] = d
-            @entries.reject!{ |i| i.created_at != params[:f_created_at_s] }
-          end
-        end
-      end
       @entries.compact!
     rescue ExpressionParseError => e
       flash[:error] = "Expression parse error: #{e.to_s}"

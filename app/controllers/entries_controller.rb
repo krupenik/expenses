@@ -4,40 +4,29 @@ class EntriesController < ApplicationController
   def index
     e = Entry.scoped(:include => :tags, :order => 'id desc')
 
-    if 'expenses' == params[:f_type]
+    if 'expenses' == session[:context][:type]
       e = e.expenses
-    elsif 'incomings' == params[:f_type]
+    elsif 'incomings' == session[:context][:type]
       e = e.incomings
     end
     
     unless params[:f_created_at].blank?
-      e = case params[:f_created_at]
-      when 'date' then e.created_at(*[params[:f_created_at_s], params[:f_created_at_f]].map{ |i| i.to_date rescue nil })
-      when 'week' then e.created_at(Date.today.beginning_of_week, Date.today.end_of_week)
-      when 'yesterday' then e.created_at(Date.yesterday)
-      when 'today' then e.created_at(Date.today)
-      else
-        if params[:f_created_at] =~ /^\d{4}\-\d{2}$/
-          d = Date.strptime(params[:f_created_at], "%Y-%m")
-          params[:f_created_at] = 'date'
-          params[:f_created_at_s] = d.beginning_of_month
-          params[:f_created_at_f] = d.end_of_month
-          e.created_at(params[:f_created_at_s], params[:f_created_at_f])
-        elsif params[:f_created_at] =~ /^\d{4}\-\d{2}\-\d{2}$/
-          d = Date.strptime(params[:f_created_at], "%Y-%m-%d")
-          params[:f_created_at] = 'date'
-          params[:f_created_at_s] = d
-          params[:f_created_at_f] = d
-          e.created_at(params[:f_created_at_s])
-        end
+      if params[:f_created_at] =~ /^(\d{4})-(\d{2})-(\d{2})$/
+        params[:f_created_at_s] = params[:f_created_at_f] = Date.new($1.to_i, $2.to_i, $3.to_i)
+      elsif params[:f_created_at] =~ /^(\d{4})-(\d{2})$/
+        params[:f_created_at_s] = Date.new($1.to_i, $2.to_i)
+        params[:f_created_at_f] = params[:f_created_at_s].end_of_month
       end
-    else
-      @last_milestone = Milestone.last(:conditions => ["created_at < ?", Date.today])
-      if @last_milestone
-        e = e.created_at(@last_milestone.created_at + 1, nil)
-      end
-    end
 
+      params[:f_created_at] = 'date'
+      apply_context(params)
+      redirect_to entries_path
+    end
+    e = e.created_at(*session[:context][:date][1])
+
+    if session[:context][:date][0].nil?
+      @last_milestone = Milestone.last(:conditions => ["created_at < ?", Date.today])
+    end
     @entries = e
   end
   
@@ -80,5 +69,11 @@ class EntriesController < ApplicationController
   end
   
   def destroy
+  end
+
+  def set_context
+    redirect_to root_url unless request.referer
+    apply_context params
+    redirect_to request.referer
   end
 end

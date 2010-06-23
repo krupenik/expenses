@@ -8,23 +8,6 @@
     %th.amount
       = "%0.2f - %0.2f = %0.2f" % [incomings, expenses, incomings - expenses]
 
-- form_tag entries_url, :method => :get, :id => "filter_form" do
-  %table.grid#filter
-    %thead
-      %tr
-        %td
-          type:
-          = select_tag 'f_type', options_for_select([[nil], ['expenses'], ['incomings']], params[:f_type])
-
-          created:
-          = select_tag 'f_created_at', options_for_select([[nil], ['yesterday'], ['today'], ['week'], ['date']], params[:f_created_at])
-          %span#f_created_at_interval
-            = text_field_tag 'f_created_at_s', params[:f_created_at_s], :class => 'datepicker', :size => 10
-            = text_field_tag 'f_created_at_f', params[:f_created_at_f], :class => 'datepicker', :size => 10
-
-          = submit_tag 'apply', :id => 'filter_apply'
-          %input{:type => 'button', :value => 'reset', :id => 'filter_reset'}
-
 %table.grid#entries
   %thead
     %tr

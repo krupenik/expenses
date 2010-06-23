@@ -1,12 +1,70 @@
 - if user_signed_in?
   #header
+    #context
+      - form_tag context_path, :method => :post, :id => 'context_form' do
+        date:
+        = select_tag 'f_created_at', options_for_select(date_contexts, session[:context][:date][0])
+        %span#f_created_at_interval
+          = text_field_tag 'f_created_at_s', session[:context][:date][1][0], :class => 'datepicker', :size => 11
+          = text_field_tag 'f_created_at_f', session[:context][:date][1][1], :class => 'datepicker', :size => 11
+
+        type:
+        = select_tag 'f_type', options_for_select([[nil], ['expenses'], ['incomings']], session[:context][:type])
+        = submit_tag 'apply', :id => 'context_apply'
+        %input#context_reset{:type => 'button', :value => 'reset'}
+
+
     = current_user.email
     = link_to 'Entries', entries_path
-    = link_to 'Calendar', calendar_entries_path
+    = link_to 'Calendar', calendar_path
     = link_to 'Tags', tags_path
     = link_to 'Logout', destroy_user_session_path, :id => 'logout_link'
+
+    :javascript
+      $(function() {
+        if ('' == $("#f_created_at").val() && '' == $("#f_type").val()) { $("#context_reset").attr("disabled", true); }
+        if ('date' != $("#f_created_at").val()) {
+          $("#context_apply").attr("disabled", true);
+          $("#f_created_at_interval").hide();
+        }
+
+        $("#f_created_at_interval .datepicker").datepicker();
+
+        $("#f_created_at").change(function() {
+          $this = $(this);
+          if ('date' == $this.val()) {
+            $("#f_created_at_interval").show();
+            $("#context_apply").attr("disabled", false);
+          }
+          else {
+            $("#context_apply").attr("disabled", true);
+            $("#f_created_at_interval .datepicker").each(function() { $(this).val(''); });
+            $("#f_created_at_interval").hide();
+            $(this.form).submit();
+          }
+        });
+
+        $("#f_type").change(function() { $(this.form).submit(); });
+
+        $("#context_reset").click(function()
+        {
+          $(':input', $(this.form)).each(function() {
+            var type = this.type;
+            var tag = this.tagName.toLowerCase(); // normalize case
+            if (type == 'text' || type == 'password' || tag == 'textarea') {
+              this.value = '';
+            }
+            else if (type == 'checkbox' || type == 'radio') {
+              this.checked = false;
+            }
+            else if (tag == 'select') {
+              this.selectedIndex = -1;
+            }
+          });
+          $(this.form).submit();
+        });
+      });
   
 - if @content_for_header
   #header_contextual
     = yield(:header)
-  

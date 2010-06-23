@@ -16,15 +16,16 @@ class Entry < ActiveRecord::Base
   named_scope :incomings, :conditions => "amount > 0"
   
   def self.created_at_conditions(*args)
-    if args.empty?
+    args = *args if args[0].is_a?(Array)
+    if args.compact.empty?
       nil
     elsif 1 == args.size
-      ["created_at = ?", args[0]]
+      ["#{self.table_name}.created_at = ?", args[0]]
     else
-      (s, f) = args.flatten
+      (s, f) = args
       _conditions = []
-      _conditions << "created_at >= ?" unless s.nil?
-      _conditions << "created_at <= ?" unless f.nil?
+      _conditions << "#{self.table_name}.created_at >= ?" unless s.nil?
+      _conditions << "#{self.table_name}.created_at <= ?" unless f.nil?
       [_conditions.join(" AND "), [s, f].compact].flatten
     end
   end
