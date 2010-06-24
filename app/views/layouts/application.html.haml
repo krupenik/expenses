@@ -2,8 +2,8 @@
 %html{:xmlns => "http://www.w3.org/1999/xhtml"}
   %head
     %title= h(yield(:title) || "Untitled")
-    = stylesheet_link_tag 'jquery-ui', 'application'
-    = javascript_include_tag 'jquery.min', 'jquery-ui.min', 'jquery.tablesorter.min', 'application'
+    = stylesheet_link_tag 'jquery-ui', 'application', :cache => 'cached_application'
+    = javascript_include_tag 'jquery.min', 'jquery-ui.min', 'jquery.tablesorter.min', 'application', :cache => 'cached_application'
     = yield(:head)
 
   %body
