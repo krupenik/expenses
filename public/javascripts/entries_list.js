@@ -12,6 +12,9 @@ $(function() {
     if (-1 == sort_by['column']) { sort_by['column'] = 1; }
     if (-1 == sort_by['order']) { sort_by['order'] = 1; }
 
+    $("#entries thead th").click(function() {
+      $.tablesorter.headerClicked = true;
+    });
     $("#entries").tablesorter({
       cssAsc: 'sort_asc',
       cssDesc: 'sort_desc',
@@ -25,6 +28,7 @@ $(function() {
         4: { sorter: 'text' },
       }
     }).bind("sortEnd", function(e) {
+      if (!$.tablesorter.headerClicked) { return; }
       if (1 < this.config.sortList.length) { return; } // prevent hash change for multisort
 
       var l = $(this.config.headerList);

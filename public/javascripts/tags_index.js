@@ -15,7 +15,10 @@ $(function() {
     else {
       tags_data = tags_expenses;
       data_f = f_dec;
-      criterion = document.location.hash = 'by_expenses';
+      if (criterion) {
+        document.location.hash = 'by_expenses';
+      }
+      criterion = 'by_expenses';
     }
 
     max_value = 0;
