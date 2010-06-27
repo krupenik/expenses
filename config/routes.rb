@@ -3,7 +3,7 @@ ActionController::Routing::Routes.draw do |map|
 
   map.resources :entries
   map.resources :tags
-  
+
   map.calendar '/calendar', :controller => 'entries', :action => 'calendar', :conditions => {:method => :get}
   map.context '/context', :controller => 'entries', :action => 'set_context', :conditions => {:method => :post}
 

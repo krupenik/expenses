@@ -10,7 +10,7 @@ $(function() {
   if ('' == $("#f_created_at").val() && '' == $("#f_type").val()) { $("#context_reset").attr("disabled", true); }
   if ('date' != $("#f_created_at").val()) {
     $("#context_apply").attr("disabled", true);
-    $("#f_created_at_interval").hide();    
+    $("#f_created_at_interval").hide();
   }
 
   $("#f_created_at_interval .datepicker").datepicker();
@@ -38,13 +38,13 @@ $(function() {
       var type = this.type;
       var tag = this.tagName.toLowerCase(); // normalize case
       if (type == 'text' || type == 'password' || tag == 'textarea') {
-        this.value = '';        
+        this.value = '';
       }
       else if (type == 'checkbox' || type == 'radio') {
-        this.checked = false;        
+        this.checked = false;
       }
       else if (tag == 'select') {
-        this.selectedIndex = -1;        
+        this.selectedIndex = -1;
       }
     });
     $(this.form).submit();

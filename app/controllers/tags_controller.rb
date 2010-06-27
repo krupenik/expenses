@@ -8,7 +8,7 @@ class TagsController < ApplicationController
     @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.entries.size] }]
     @tags_expenses = Hash[@tags.map{ |i| [i.id, i.entries.map{ |i| i.amount if i.amount < 0 }.compact.inject{ |a, e| a + e }.to_f.abs]}].reject{ |k, v| 0 == v }
   end
-  
+
   def show
     @tag_list = params[:id].gsub(/\s*([!|])\s*/, ' \1 ').gsub(/\s*(,)\s*/, '\1 ')
     @entries = []
@@ -46,11 +46,11 @@ class TagsController < ApplicationController
       flash[:error] = "Expression parse error: #{e.to_s}"
     end
   end
-  
+
   def new
     @tag = Tag.new
   end
-  
+
   def create
     @tag = Tag.new(params[:tag])
     if @tag.save
@@ -60,11 +60,11 @@ class TagsController < ApplicationController
       render :action => 'new'
     end
   end
-  
+
   def edit
     @tag = Tag.find(params[:id])
   end
-  
+
   def update
     @tag = Tag.find(params[:id])
     if @tag.update_attributes(params[:tag])
@@ -74,7 +74,7 @@ class TagsController < ApplicationController
       render :action => 'edit'
     end
   end
-  
+
   def destroy
     @tag = Tag.find(params[:id])
     @tag.destroy

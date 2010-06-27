@@ -9,7 +9,7 @@ class EntriesController < ApplicationController
     elsif 'incomings' == session[:context][:type]
       e = e.incomings
     end
-    
+
     unless params[:f_created_at].blank?
       if params[:f_created_at] =~ /^(\d{4})-(\d{2})-(\d{2})$/
         params[:f_created_at_s] = params[:f_created_at_f] = Date.new($1.to_i, $2.to_i, $3.to_i)
@@ -28,16 +28,16 @@ class EntriesController < ApplicationController
     end
     @entries = e
   end
-  
+
   def calendar
     @date = Date.strptime(params[:date], "%Y-%m") rescue Date.today
     @entries = Entry.created_at(@date.beginning_of_month, @date.end_of_month)
   end
-  
+
   def new
     @entry = Entry.new
   end
-  
+
   def create
     @entry = Entry.new(params[:entry])
     @entry.edit_history << [current_user.id, Time.now]
@@ -48,14 +48,14 @@ class EntriesController < ApplicationController
       render :action => 'new'
     end
   end
-  
+
   def show
   end
-  
+
   def edit
     @entry = Entry.find(params[:id])
   end
-  
+
   def update
     @entry = Entry.find(params[:id])
     @entry.edit_history << [current_user.id, Time.now]
@@ -66,7 +66,7 @@ class EntriesController < ApplicationController
       render :action => 'edit'
     end
   end
-  
+
   def destroy
   end
 

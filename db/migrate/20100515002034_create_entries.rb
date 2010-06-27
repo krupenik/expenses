@@ -6,7 +6,7 @@ class CreateEntries < ActiveRecord::Migration
       t.date :created_at
     end
   end
-  
+
   def self.down
     drop_table :entries
   end

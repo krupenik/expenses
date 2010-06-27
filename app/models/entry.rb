@@ -1,7 +1,7 @@
 class Entry < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
-  
+
   attr_accessible :amount, :comment, :created_at, :tag_names
   attr_writer :tag_names
   after_save :assign_tags
@@ -9,12 +9,12 @@ class Entry < ActiveRecord::Base
 
   validates_numericality_of :amount, :on => :create, :message => "is not a number"
   validates_presence_of :comment, :on => :create, :message => "can't be blank"
-  
+
   named_scope :created_at, lambda{ |*args| {:conditions => created_at_conditions(*args)} }
-  
+
   named_scope :expenses, :conditions => "amount < 0"
   named_scope :incomings, :conditions => "amount > 0"
-  
+
   def self.created_at_conditions(*args)
     args = *args if args[0].is_a?(Array)
     if args.compact.empty?
@@ -38,7 +38,7 @@ class Entry < ActiveRecord::Base
   def tag_names
     @tag_names || tags.map(&:name).join(", ")
   end
-  
+
   def amount=(amount)
     if amount =~ /[\+\-\*\/\(\)]/
       amount.gsub!(/[^\d\.\+\-\*\/\(\)]/, '')
@@ -49,7 +49,7 @@ class Entry < ActiveRecord::Base
   end
 
   private
-  
+
   def assign_tags
     if @tag_names
       self.tags = @tag_names.split(/\s*,\s*/).map do |tag_name|
