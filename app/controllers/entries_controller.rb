@@ -17,7 +17,6 @@ class EntriesController < ApplicationController
         params[:f_created_at_s] = Date.new($1.to_i, $2.to_i)
         params[:f_created_at_f] = params[:f_created_at_s].end_of_month
       end
-
       params[:f_created_at] = 'date'
       apply_context(params)
       redirect_to entries_path

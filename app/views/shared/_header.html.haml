@@ -9,7 +9,7 @@
           = text_field_tag 'f_created_at_f', session[:context][:date][1][1], :class => 'datepicker', :size => 11
 
         type:
-        = select_tag 'f_type', options_for_select([[nil], ['expenses'], ['incomings']], session[:context][:type])
+        = select_tag 'f_type', options_for_select(type_contexts, session[:context][:type])
         = submit_tag 'apply', :id => 'context_apply'
         %input#context_reset{:type => 'button', :value => 'reset'}
 

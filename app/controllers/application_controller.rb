@@ -32,4 +32,9 @@ class ApplicationController < ActionController::Base
   def date_contexts
     [nil, :today, :week, :month, :date]
   end
+
+  helper_method :type_contexts
+  def type_contexts
+    [nil, 'expenses', 'incomings']
+  end
 end
