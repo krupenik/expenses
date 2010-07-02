@@ -50,6 +50,7 @@ class EntriesController < ApplicationController
   end
 
   def show
+    redirect_to edit_entry_path(params[:id])
   end
 
   def edit
@@ -68,6 +69,7 @@ class EntriesController < ApplicationController
   end
 
   def destroy
+    redirect_to entries_path
   end
 
   def set_context

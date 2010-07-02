@@ -2,14 +2,11 @@
   #header
     #context
       - form_tag context_path, :method => :post, :id => 'context_form' do
-        date:
+        = select_tag 'f_type', options_for_select(type_contexts, session[:context][:type])
         = select_tag 'f_created_at', options_for_select(date_contexts, session[:context][:date][0])
         %span#f_created_at_interval
           = text_field_tag 'f_created_at_s', session[:context][:date][1][0], :class => 'datepicker', :size => 11
           = text_field_tag 'f_created_at_f', session[:context][:date][1][1], :class => 'datepicker', :size => 11
-
-        type:
-        = select_tag 'f_type', options_for_select(type_contexts, session[:context][:type])
         = submit_tag 'apply', :id => 'context_apply'
         %input#context_reset{:type => 'button', :value => 'reset'}
 
