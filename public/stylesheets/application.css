@@ -23,8 +23,10 @@ th a { text-decoration: none; }
 {
   width: 400px;
   text-align: center;
-  margin: 10px auto;
   padding: 5px 10px;
+  position: absolute;
+  top: 10px;
+  left: 10px;
 }
 
 #flash_notice
@@ -112,6 +114,8 @@ h1 { text-align: center; margin: 20px; }
 .grid thead tr .sort_asc { background: #ccc url(/images/asc.gif) no-repeat center right; }
 .grid thead tr .sort_desc { background: #ccc url(/images/desc.gif) no-repeat center right; }
 .grid th.amount { text-align: center; font-size: 2em; line-height: 1.5em; }
+
+#summary, #summary * { border: 0; }
 
 #entries .expense { background: #fcc; }
 #entries .expense:hover { background: #faa; }

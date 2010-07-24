@@ -3,7 +3,7 @@
 - incomings, expenses = [@entries.select{ |i| i.amount > 0 }, @entries.select{ |i| i.amount < 0 }].map{ |i| i.map(&:amount).sum.abs }
 - if @last_milestone
   - incomings += @last_milestone.amount
-%table.grid
+%table.grid#summary
   %tr
     %th.amount
       = "%0.2f - %0.2f = %0.2f" % [incomings, expenses, incomings - expenses]

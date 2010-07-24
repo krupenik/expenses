@@ -9,6 +9,10 @@ var App = {
 
   init: function()
   {
+    var flashes = ["#flash_notice", "#flash_alert"];
+    for (var i = 0; i < flashes.length; i++) {
+      $(flashes[i]).delay(3000).fadeOut();
+    }
     App.applyLayout(); $(window).resize(App.applyLayout);
     App.initHeader();
   },
