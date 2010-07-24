@@ -19,7 +19,6 @@ $(function() {
       cssAsc: 'sort_asc',
       cssDesc: 'sort_desc',
       sortList: [[sort_by['column'], sort_by['order']]],
-      widgets: ["zebra"],
       headers: {
         0: { sorter: 'digit' },
         1: { sorter: 'isoDate' },

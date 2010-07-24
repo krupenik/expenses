@@ -113,10 +113,10 @@ h1 { text-align: center; margin: 20px; }
 .grid thead tr .sort_desc { background: #ccc url(/images/desc.gif) no-repeat center right; }
 .grid th.amount { text-align: center; font-size: 2em; line-height: 1.5em; }
 
-#entries .expense.odd { background: #ffdddd; }
-#entries .expense.even { background: #ffd0d0; }
-#entries .income { background: #ddffdd; }
-#entries .income.even { background: #d0ffd0; }
+#entries .expense { background: #fcc; }
+#entries .expense:hover { background: #faa; }
+#entries .income { background: #cfc; }
+#entries .income:hover { background: #afa; }
 
 #calendar { margin: 20px auto; width: 71em; }
 #calendar #month { text-align: center; }
