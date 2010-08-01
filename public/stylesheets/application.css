@@ -1,50 +1,41 @@
 html, body, h1, h2, h3, div, p, a, img, form, fieldset, ol, ul, li, table, tr, th, td { border: 0; padding: 0; margin: 0; }
 input, select { padding: 0; margin: 0; }
 
-.clear { clear: both; height: 0; overflow: hidden; }
-
-body
-{
-  background-color: #fff;
-  font: 10pt/15pt "Lucida Grande", "Segoe UI", sans-serif;
-}
-
+body { background-color: #fff; font: 10pt/15pt "Lucida Grande", "Segoe UI", sans-serif; }
 a { color: #00c; text-decoration: none; }
 th a { text-decoration: none; }
+h1 { text-align: center; margin: 20px; }
+h2 { margin: 0.5em; }
+h2 a { margin: 0.5em; }
+h3 { margin-top: 3em; margin-bottom: 0.5em; }
+ul { margin-left: 2em; }
 
-#container
-{
-  margin: 0 5px;
-  padding: 0 5px;
-  overflow: auto;
+.clear { clear: both; height: 0; overflow: hidden; }
+.fieldWithErrors { display: inline; }
+.fieldWithErrors * {
+  border: 2px inset #f00;
 }
 
-#flash_notice, #flash_error, #flash_alert
+#container { overflow: auto; }
+
+#flash_notice, #flash_alert
 {
-  width: 400px;
   text-align: center;
-  padding: 5px 10px;
-  position: absolute;
-  top: 10px;
-  left: 10px;
+  padding: 5px 0;
 }
 
 #flash_notice
 {
   background-color: #cfc;
-  border: solid 1px #6c6;
+  border: #6c6 solid;
+  border-width: 1px 0;
 }
 
 #flash_error, #flash_alert
 {
   background-color: #fcc;
-  border: solid 1px #c66;
-}
-
-.fieldWithErrors { display: inline; }
-
-.fieldWithErrors * {
-  border: 2px inset #f00;
+  border: #f66 solid;
+  border-width: 1px 0;
 }
 
 #errorExplanation
@@ -78,8 +69,6 @@ th a { text-decoration: none; }
 
 #errorExplanation ul { margin: 2px 24px; list-style: disc; }
 
-h1 { text-align: center; margin: 20px; }
-
 .edit_entry { margin: 2px; }
 .new_entry input, .edit_entry input { font-size: 1.2em; padding: 2px; }
 #entry_comment { width: 40%; }
@@ -103,9 +92,7 @@ h1 { text-align: center; margin: 20px; }
 
 .grid, .grid thead th, .grid tfoot th { border: 1px solid #888; }
 .grid thead th, .grid tfoot th { font-size: 1.2em; padding: 4px; }
-
 .grid thead tr, .grid tfoot tr { background: #f0f0f0; }
-
 .grid .id { width: 3em; text-align: center; }
 .grid .date { width: 10em; text-align: center; }
 .grid .amount { width: 6em; text-align: right; }
@@ -113,16 +100,15 @@ h1 { text-align: center; margin: 20px; }
 .grid thead tr .header { background: #ddd url(/images/bg.gif) no-repeat center right; cursor: pointer; }
 .grid thead tr .sort_asc { background: #ccc url(/images/asc.gif) no-repeat center right; }
 .grid thead tr .sort_desc { background: #ccc url(/images/desc.gif) no-repeat center right; }
-.grid th.amount { text-align: center; font-size: 2em; line-height: 1.5em; }
 
-#summary, #summary * { border: 0; }
+#summary { text-align: center; font-size: 2em; font-weight: bold; line-height: 1.5em; }
 
-#entries .expense { background: #fcc; }
-#entries .expense:hover { background: #faa; }
-#entries .income { background: #cfc; }
-#entries .income:hover { background: #afa; }
+#entries .expense { background: #eee; }
+#entries .expense:hover { background: #ddd; }
+#entries .income { background: #afa; }
+#entries .income:hover { background: #8f8; }
 
-#calendar { margin: 20px auto; width: 71em; }
+#calendar { margin: 20px auto; width: 75em; }
 #calendar #month { text-align: center; }
 #calendar table { border-collapse: collapse; width: 100%; }
 #calendar thead th
@@ -131,7 +117,7 @@ h1 { text-align: center; margin: 20px; }
   padding: 4px;
   background: #444;
   color: #fff;
-  width: 14.2857142857143%
+  width: 14.2857142857143%;
 }
 #calendar td { border: 1px solid #888; height: 5em; }
 #calendar .weekend { background: #ccc; }
@@ -158,7 +144,7 @@ h1 { text-align: center; margin: 20px; }
   border-bottom: 1px solid #696969;
   background: #9c9c9c;
 }
-#header_contextual { border-top: 1px solid #696969; margin: 1px 0; }
+#header_contextual { border-top: 1px solid #696969; margin: 1px 0 0; }
 #header_contextual form { text-align: right; }
 #header a, #header_contextual a
 {
@@ -198,11 +184,6 @@ h1 { text-align: center; margin: 20px; }
 #login_form input { font-size: 1.2em; padding: 5px; }
 #login_form .inputs input { width: 70%; }
 #login_form .buttons { text-align: center; }
-
-h2 { margin: 0.5em; }
-h2 a { margin: 0.5em; }
-h3 { margin-top: 3em; margin-bottom: 0.5em; }
-ul { margin-left: 2em; }
 
 #filter select { margin: 3px; }
 #tags_filter_form input { padding: 3px; font-size: 1em; }

@@ -11,7 +11,8 @@ var App = {
   {
     var flashes = ["#flash_notice", "#flash_alert"];
     for (var i = 0; i < flashes.length; i++) {
-      $(flashes[i]).delay(3000).fadeOut();
+      $(flashes[i]).delay(10000).fadeOut();
+      $(flashes[i]).click(function() { $(this).hide(); });
     }
     App.applyLayout(); $(window).resize(App.applyLayout);
     App.initHeader();
