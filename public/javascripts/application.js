@@ -9,18 +9,21 @@ var App = {
 
   init: function()
   {
-    var flashes = ["#flash_notice", "#flash_alert"];
-    for (var i = 0; i < flashes.length; i++) {
-      $(flashes[i]).delay(10000).fadeOut();
-      $(flashes[i]).click(function() { $(this).hide(); });
-    }
-    App.applyLayout(); $(window).resize(App.applyLayout);
+    $("#flash_notice, #flash_alert").delay(10000).fadeOut().click(function() { $(this).hide(); });
+    App.applyLayout();
     App.initHeader();
   },
 
   applyLayout: function() {
     var c = $("#container"); if (c[0]) {
-      c.height($(window).height() - c.position()['top']);
+      var prevs = [];
+      if (null != (prevs[0] = c[0].previousElementSibling)) {
+        while (null != (prevs[prevs.length] = prevs[prevs.length - 1].previousElementSibling));
+      }
+      c.css({
+        position: "fixed", left: 0, right: 0, bottom: 0,
+        top: prevs.map(function(e) { return $(e).outerHeight(true); }).reduce(function(a, e) { return a + e; }) || 0,
+      });
     }
   },
 
