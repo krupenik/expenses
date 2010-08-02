@@ -42,7 +42,7 @@ class EntriesController < ApplicationController
     @entry = Entry.new(params[:entry])
     @entry.edit_history << [current_user.id, Time.now]
     if @entry.save
-      redirect_to :action => 'index', :notice => "Successfully created entry."
+      redirect_to entries_url, :notice => "Successfully created entry."
     else
       render :action => 'new'
     end
@@ -60,7 +60,7 @@ class EntriesController < ApplicationController
     @entry = Entry.find(params[:id])
     @entry.edit_history << [current_user.id, Time.now]
     if @entry.update_attributes(params[:entry])
-      redirect_to :action => 'index', :notice => "Successfully updated entry."
+      redirect_to entries_url, :notice => "Successfully updated entry."
     else
       render :action => 'edit'
     end
