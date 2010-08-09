@@ -1,9 +1,6 @@
 - javascript 'entries_list'
 
-- incomings, expenses = [@entries.select{ |i| i.amount > 0 }, @entries.select{ |i| i.amount < 0 }].map{ |i| i.map(&:amount).sum.abs }
-- if @last_milestone
-  - incomings += @last_milestone.amount
-#summary= "%0.2f - %0.2f = %0.2f" % [incomings, expenses, incomings - expenses]
+= render 'entries/summary'
 
 %table.grid#entries
   %thead

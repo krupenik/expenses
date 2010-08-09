@@ -101,8 +101,6 @@ ul { margin-left: 2em; }
 .grid thead tr .sort_asc { background: #ccc url(/images/asc.gif) no-repeat center right; }
 .grid thead tr .sort_desc { background: #ccc url(/images/desc.gif) no-repeat center right; }
 
-#summary { text-align: center; font-size: 2em; font-weight: bold; line-height: 1.5em; }
-
 #entries .expense { background: #eee; }
 #entries .expense:hover { background: #ddd; }
 #entries .income { background: #afa; }
@@ -135,6 +133,9 @@ ul { margin-left: 2em; }
 #calendar .sum.income a { color: #0c0; }
 #calendar .sum.expense a { color: #c00; }
 #calendar .notmonth, #calendar .notmonth a { color: #aaa; }
+#calendar #summary { font-size: 1.5em; }
+
+#summary { text-align: center; font-size: 2em; font-weight: bold; line-height: 1.5em; }
 
 #header, #header_contextual
 {
