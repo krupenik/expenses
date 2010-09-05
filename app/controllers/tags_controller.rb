@@ -23,7 +23,9 @@ class TagsController < ApplicationController
         when /[!|,]/
           o1 = stack.pop
           o2 = stack.pop
-          if o1.nil? or o2.nil?: raise ExpressionParseError, "missing arguments to '#{i}'"; end
+          if o1.nil? or o2.nil?
+            raise ExpressionParseError, "missing arguments to '#{i}'"
+          end
           case i
           when '!' then stack << (o2 - o1)
           when '|' then stack << (o2 + o1)
@@ -59,11 +61,15 @@ class TagsController < ApplicationController
         when ')'
           while ops.last != '('
             ret << ops.pop
-            if ops.empty?: raise ExpressionParseError, "'#{s}' contains unbalanced parentheses"; end
+            if ops.empty?
+              raise ExpressionParseError, "'#{s}' contains unbalanced parentheses"
+            end
           end
           ops.pop
         when /[!|,]/
-          while ops.last =~ /[!|,]/: ret << ops.pop; end
+          while ops.last =~ /[!|,]/
+            ret << ops.pop
+          end
           ops << i
         end
       else
@@ -72,7 +78,9 @@ class TagsController < ApplicationController
     end
 
     until ops.empty?
-      if %w[( )].include?(ops.last): raise ExpressionParseError, "'#{s}' contains unbalanced parentheses"; end
+      if %w[( )].include?(ops.last)
+        raise ExpressionParseError, "'#{s}' contains unbalanced parentheses"
+      end
       ret << ops.pop
     end
 

@@ -3,4 +3,4 @@
   %td.date= entry.created_at
   %td.amount= "%0.2f" % entry.amount
   %td= entry.comment
-  %td= entry.tags.compact.map { |t| link_to t.name, t }.join(", ")
+  %td=raw entry.tags.compact.map { |t| link_to t.name, t }.join(", ")

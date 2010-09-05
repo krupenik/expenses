@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  filter_parameter_logging :password
-
   @@default_context = {
     :type => nil,
     :date => [nil, [Milestone.last(:conditions => ["created_at < ?", Date.today]).try(:created_at).try(:tomorrow), nil]],
@@ -22,6 +20,7 @@ class ApplicationController < ActionController::Base
     when 'date' then [:date, [params[:f_created_at_s], params[:f_created_at_f]].map{ |i| i.to_date rescue nil }]
     when 'week' then [:week, [Date.today.beginning_of_week, Date.today.end_of_week]]
     when 'month' then [:month, [Date.today.beginning_of_month, Date.today.end_of_month]]
+    when 'overall' then [:overall, [nil, nil]]
     when 'today' then [:today, [Date.today, nil]]
     else @@default_context[:date]
     end
@@ -30,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :date_contexts
   def date_contexts
-    [nil, :today, :week, :month, :date]
+    [nil, :today, :week, :month, :overall, :date]
   end
 
   helper_method :type_contexts

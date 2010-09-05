@@ -1,7 +1,7 @@
 - if user_signed_in?
   #header
     #context
-      - form_tag context_path, :method => :post, :id => 'context_form' do
+      = form_tag context_path, :method => :post, :id => 'context_form' do
         = select_tag 'f_type', options_for_select(type_contexts, session[:context][:type])
         = select_tag 'f_created_at', options_for_select(date_contexts, session[:context][:date][0])
         %span#f_created_at_interval
