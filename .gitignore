@@ -5,6 +5,7 @@ Capfile
 config/database.yml
 config/deploy.rb
 db/schema.rb
+Gemfile.lock
 log/*.log
 public/javascripts/cached_*.js
 public/sitemap.xml
