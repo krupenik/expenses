@@ -4,8 +4,6 @@
 Capfile
 config/database.yml
 config/deploy.rb
-config/initializers/host_settings.rb
-config/mongrel_cluster.yml
 db/schema.rb
 log/*.log
 public/javascripts/cached_*.js
