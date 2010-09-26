@@ -1,6 +1,0 @@
-[submodule "vendor/plugins/dynamic_form"]
-	path = vendor/plugins/dynamic_form
-	url = git://github.com/rails/dynamic_form.git
-[submodule "vendor/plugins/table_builder"]
-	path = vendor/plugins/table_builder
-	url = git://github.com/p8/table_builder.git
