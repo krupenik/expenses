@@ -4,13 +4,13 @@
 #calendar
   #month
     %h2
-      = link_to "&larr;", calendar_path(:date => (@date.beginning_of_month - 1).strftime("%Y-%m"))
+      = link_to "&larr;".html_safe, calendar_path(:date => (@date.beginning_of_month - 1).strftime("%Y-%m"))
       = link_to @date.strftime("%B %Y"), entries_path(:f_created_at => @date.strftime("%Y-%m"))
-      = link_to "&rarr;", calendar_path(:date => (@date.end_of_month + 1).strftime("%Y-%m"))
+      = link_to "&rarr;".html_safe, calendar_path(:date => (@date.end_of_month + 1).strftime("%Y-%m"))
 
   = render 'summary'
 
-  - calendar_for(@entries, :date => @date.year, :month => @date.month, :first_day_of_week => 1) do |cal|
+  - calendar_for(@entries.to_a, :date => @date.year, :month => @date.month, :first_day_of_week => 1) do |cal|
     = cal.head('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
     - cal.day(:day_method => :created_at) do |day, entries|
       %span.day= day.day

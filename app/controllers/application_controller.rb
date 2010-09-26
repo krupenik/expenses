@@ -2,8 +2,6 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  filter_parameter_logging :password
-
   @@default_context = {
     :type => nil,
     :date => [nil, [Milestone.last(:conditions => ["created_at < ?", Date.today]).try(:created_at).try(:tomorrow), nil]],

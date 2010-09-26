@@ -1,7 +1,7 @@
 - title "Tags: #{@tag_list}", false
 - javascript 'tags_show'
 
-- form_tag tags_url, :method => :get, :id => "tags_filter_form" do
+= form_tag tags_url, :method => :get, :id => "tags_filter_form" do
   %h1
     Tags:
     = text_field_tag 'tags', @tag_list, :size => 30

@@ -1,11 +1,11 @@
-ActionController::Routing::Routes.draw do |map|
-  map.devise_for :users, :path_names => {:sign_in => 'login', :sign_out => 'logout'}
+Expenses::Application.routes.draw do
+  devise_for :users, :path_names => {:sign_in => 'login', :sign_out => 'logout'}
 
-  map.resources :entries
-  map.resources :tags
+  resources :entries
+  resources :tags
 
-  map.calendar '/calendar', :controller => 'entries', :action => 'calendar', :conditions => {:method => :get}
-  map.context '/context', :controller => 'entries', :action => 'set_context', :conditions => {:method => :post}
+  match '/calendar' => 'entries#calendar', :as => :calendar, :via => :get
+  match '/context' => 'entries#set_context', :as => :context, :via => :post
 
-  map.root :controller => 'entries'
+  root :to => "entries#index"
 end
