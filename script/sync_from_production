@@ -1,17 +1,16 @@
 #! /bin/sh
 
+PATH=/usr/bin:/usr/sbin:/bin:/sbin
+
 [ -d 'app' ] || (echo "not in rails project directory" && exit 1)
 
-SRV=cobra.krupenik.com
+SRV=frank.krupenik.com
 FN=expenses-db-`date +"%Y%m%d%H%M%S"`
 DMP=/tmp/$FN
 DB="-U expenses expenses"
-RA=/var/www/expenses
-SYS=public/system/
-ECHO=/bin/echo
 
-$ECHO -n "dumping remote database: " && ssh $SRV "pg_dump $DB > $DMP && gzip $DMP" && $ECHO "done."
-$ECHO -n "fetching dump file..." && (scp $SRV:$DMP.gz $DMP.gz && gunzip $DMP.gz); ssh $SRV "rm $DMP.gz"
-$ECHO -n "clearing local database: " && (rake db:drop && rake db:create) &> /dev/null && $ECHO "done."
-$ECHO -n "populating local database: " && psql $DB < $DMP &> /dev/null && rm $DMP && $ECHO "done."
-# $ECHO -n "rsyncing system: " && rsync -avz --no-g --del $SRV:$RA/$SYS $SYS
+echo -n "dumping remote database: " && ssh $SRV "pg_dump $DB > $DMP && gzip $DMP" && $ECHO "done."
+echo -n "fetching dump file..." && (scp $SRV:$DMP.gz $DMP.gz && gunzip $DMP.gz); ssh $SRV "rm $DMP.gz"
+echo -n "clearing local database: " && (rake db:drop && rake db:create) &> /dev/null && $ECHO "done."
+echo -n "populating local database: " && psql $DB < $DMP &> /dev/null && rm $DMP && $ECHO "done."
+

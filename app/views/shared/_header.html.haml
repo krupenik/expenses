@@ -17,6 +17,6 @@
     = link_to 'Tags', tags_path
     = link_to 'Logout', destroy_user_session_path, :id => 'logout_link'
 
-- if @content_for_header
+- if content_for? :header
   #header_contextual
     = yield(:header)

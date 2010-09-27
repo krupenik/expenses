@@ -4,8 +4,8 @@ Expenses::Application.routes.draw do
   resources :entries
   resources :tags
 
-  match '/calendar' => 'entries#calendar', :as => :calendar, :via => :get
-  match '/context' => 'entries#set_context', :as => :context, :via => :post
+  get '/calendar' => 'entries#calendar', :as => :calendar
+  post '/context' => 'entries#set_context', :as => :context
 
   root :to => "entries#index"
 end
