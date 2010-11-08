@@ -151,18 +151,21 @@ ul { margin-left: 2em; }
 {
   color: #000;
   padding: 2px 5px;
-  border: 1px solid #9c9c9c;
-  border-radius: 2px;
-  -webkit-border-radius: 2px;
-  -moz-border-radius: 2px;
+  border-left: 1px solid #a8a8a8;
+  border-top: 1px solid #a8a8a8;
+  border-right: 1px solid #888888;
+  border-bottom: 1px solid #888888;
+  border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
 }
 #header a:hover, #header_contextual a:hover
 {
   background: #8c8c8c;
   border-left: 1px solid #444;
   border-top: 1px solid #444;
-  border-right: 1px solid #888;
-  border-bottom: 1px solid #888;
+  border-right: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 #header #logout_link { color: #800; text-shadow: #caa 0 1px 1px; }
 #context { float: left; }
