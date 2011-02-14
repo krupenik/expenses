@@ -12,4 +12,11 @@
 :javascript
   $(function() {
     $("#entry_created_at").datepicker();
+
+    $("#new_entry").submit(function() {
+        $(this).submit(function() {
+            return false;
+        });
+        return true;
+    });
   });

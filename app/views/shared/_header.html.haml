@@ -8,8 +8,7 @@
           = text_field_tag 'f_created_at_s', session[:context][:date][1][0], :class => 'datepicker', :size => 11
           = text_field_tag 'f_created_at_f', session[:context][:date][1][1], :class => 'datepicker', :size => 11
         = submit_tag 'apply', :id => 'context_apply'
-        %input#context_reset{:type => 'button', :value => 'reset'}
-
+        = submit_tag 'reset', :id => 'context_reset'
 
     = current_user.email
     = link_to 'Entries', entries_path

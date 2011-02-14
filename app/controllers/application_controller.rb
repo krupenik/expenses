@@ -2,16 +2,18 @@ class ApplicationController < ActionController::Base
   helper :all # include all helpers, all the time
   protect_from_forgery # See ActionController::RequestForgeryProtection for details
 
-  @@default_context = {
-    :type => nil,
-    :date => [nil, [Milestone.last(:conditions => ["created_at < ?", Date.today]).try(:created_at).try(:tomorrow), nil]],
-  }
-
   before_filter :restore_context
+
+  def default_context
+    {
+      :type => nil,
+      :date => [nil, [Milestone.last(:conditions => ["created_at < ?", Date.today]).try(:created_at).try(:tomorrow), nil]],
+    }
+  end
 
   def restore_context
     unless session[:context]
-      session[:context] = @@default_context
+      session[:context] = default_context
     end
   end
 
@@ -22,7 +24,7 @@ class ApplicationController < ActionController::Base
     when 'month' then [:month, [Date.today.beginning_of_month, Date.today.end_of_month]]
     when 'overall' then [:overall, [nil, nil]]
     when 'today' then [:today, [Date.today, nil]]
-    else @@default_context[:date]
+    else default_context[:date]
     end
     session[:context][:type] = params[:f_type]
   end

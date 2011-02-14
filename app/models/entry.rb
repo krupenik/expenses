@@ -30,13 +30,17 @@ class Entry < ActiveRecord::Base
     end
   end
 
-  def initialize(*params)
-    super(*params)
+  def initialize(*args)
+    super(*args)
     self.edit_history ||= []
   end
 
   def tag_names
-    @tag_names || tags.map(&:name).join(", ")
+    unless @tag_names.blank?
+      @tag_names.split(/\s*,\s*/)
+    else
+      self.tags.map(&:name)
+    end.sort.join(", ")
   end
 
   def amount=(amount)
@@ -46,6 +50,23 @@ class Entry < ActiveRecord::Base
     else
       write_attribute(:amount, amount.to_f)
     end
+  end
+
+  def save(*args)
+    if self.new_record?
+      possible_matches = Entry.where("created_at = ?", self.created_at)
+    else
+      possible_matches = Entry.where("created_at = ? and id != ?", self.created_at, self.id)
+    end
+    possible_matches.each do |e|
+      if e.tag_names == self.tag_names
+        e.amount += self.amount
+        e.comment += ", %s" % self.comment
+        e.save!
+        return false
+      end
+    end
+    super(*args)
   end
 
   private

@@ -1,5 +1,5 @@
 html, body, h1, h2, h3, div, p, a, img, form, fieldset, ol, ul, li, table, tr, th, td { border: 0; padding: 0; margin: 0; }
-input, select { padding: 0; margin: 0; }
+input, select { margin: 0; }
 
 body { background-color: #fff; font: 10pt/15pt "Lucida Grande", "Segoe UI", sans-serif; }
 a { color: #00c; text-decoration: none; }
@@ -18,28 +18,24 @@ ul { margin-left: 2em; }
 
 #container { overflow: auto; }
 
-#flash_notice, #flash_alert
-{
+#flash_notice, #flash_alert {
   text-align: center;
   padding: 5px 0;
 }
 
-#flash_notice
-{
+#flash_notice {
   background-color: #cfc;
   border: #6c6 solid;
   border-width: 1px 0;
 }
 
-#flash_error, #flash_alert
-{
+#flash_error, #flash_alert {
   background-color: #fcc;
   border: #f66 solid;
   border-width: 1px 0;
 }
 
-#errorExplanation
-{
+#errorExplanation {
   width: 50%;
   margin: 10px auto;
   border: 1px solid #c00;
@@ -49,8 +45,7 @@ ul { margin-left: 2em; }
   font-size: 0.8em;
 }
 
-#errorExplanation h2
-{
+#errorExplanation h2 {
   text-align: center;
   font-weight: bold;
   padding: 5px;
@@ -60,8 +55,7 @@ ul { margin-left: 2em; }
   font-size: 1em;
 }
 
-#errorExplanation p
-{
+#errorExplanation p {
   color: #333;
   margin-bottom: 0;
   padding: 8px;
@@ -75,42 +69,64 @@ ul { margin-left: 2em; }
 #entry_tag_names { width: 20%; }
 #entry_submit { visibility: hidden; }
 
-.grid
-{
-  width: 100%;
+.grid {
   border-collapse: collapse;
   margin: 1px 0;
 }
 
-.grid td, .grid th
-{
-  border-top: 1px solid #888;
-  border-bottom: 1px solid #888;
-  padding: 2px 10px;
+.grid td, .grid th {
+  padding: 4px 10px;
   vertical-align: top;
 }
 
-.grid, .grid thead th, .grid tfoot th { border: 1px solid #888; }
-.grid thead th, .grid tfoot th { font-size: 1.2em; padding: 4px; }
-.grid thead tr, .grid tfoot tr { background: #f0f0f0; }
+.grid thead th, .grid tfoot th {
+  font-size: 1.2em;
+  padding: 4px;
+  border-left: 1px solid #fff;
+  border-right: 1px solid #fff;
+}
 .grid .id { width: 3em; text-align: center; }
 .grid .date { width: 10em; text-align: center; }
 .grid .amount { width: 6em; text-align: right; }
 .grid .tags { width: 30%; }
-.grid thead tr .header { background: #ddd url(/images/bg.gif) no-repeat center right; cursor: pointer; }
-.grid thead tr .sort_asc { background: #ccc url(/images/asc.gif) no-repeat center right; }
-.grid thead tr .sort_desc { background: #ccc url(/images/desc.gif) no-repeat center right; }
+.grid thead tr .header { background: #eee url(/images/bg.gif) no-repeat center right; cursor: pointer; }
+.grid thead tr .sort_asc { background: #eee url(/images/asc.gif) no-repeat center right; }
+.grid thead tr .sort_desc { background: #eee url(/images/desc.gif) no-repeat center right; }
 
-#entries .expense { background: #eee; }
-#entries .expense:hover { background: #ddd; }
-#entries .income { background: #afa; }
-#entries .income:hover { background: #8f8; }
+#entries {
+  width: 75%;
+  float: right;
+}
+#entries tr:hover { background: #ddd; }
+#entries .expense, #entries .expense a { color: #800; }
+#entries .income, #entries .income a { color: #080; }
+#entries a.tag, #tags a.tag {
+  color: #000;
+  padding: 0 4px 1px;
+  margin: 2px;
+  border-radius: 4px;
+  background: #ffc;
+  border: 1px solid #cc8;
+}
+#entries .income a.tag { background: #cfc; border: 1px solid #8c8; }
+#entries .entry { margin-right: 8px; }
+#entries thead .comment { text-align: left; padding-left: 0.5em; }
+
+#sidebar {
+  width: 25%;
+}
+#sidebar > * { float: left; }
+#tags {
+  margin-top: 5em;
+}
+#tags ul { list-style-type: none; }
+#tags li { text-align: left; padding: 2px; }
+#tags span { float: left; width: 6em; text-align: right; }
 
 #calendar { margin: 20px auto; width: 75em; }
 #calendar #month { text-align: center; }
 #calendar table { border-collapse: collapse; width: 100%; }
-#calendar thead th
-{
+#calendar thead th {
   border: 1px solid #888;
   padding: 4px;
   background: #444;
@@ -120,8 +136,7 @@ ul { margin-left: 2em; }
 #calendar td { border: 1px solid #888; height: 5em; }
 #calendar .weekend { background: #ccc; }
 #calendar .today { background: #aaf; }
-#calendar .day
-{
+#calendar .day {
   float: left;
   margin: -1.8em 0 0 -1px;
   padding: 2px;
@@ -137,48 +152,33 @@ ul { margin-left: 2em; }
 
 #summary { text-align: center; font-size: 2em; font-weight: bold; line-height: 1.5em; }
 
-#header, #header_contextual
-{
+#header, #header_contextual {
   text-align: right;
-  text-shadow: #ccc 0 1px 1px;
+  text-shadow: #ccc 0 0px 1px;
   padding: 5px;
-  border-bottom: 1px solid #696969;
-  background: #9c9c9c;
 }
-#header_contextual { border-top: 1px solid #696969; margin: 1px 0 0; }
-#header_contextual form { text-align: right; }
-#header a, #header_contextual a
-{
-  color: #000;
+#header_contextual { margin: -1px 0 0; }
+#header_contextual form { text-align: center; }
+#header a, #header_contextual a {
+  color: #00c;
   padding: 2px 5px;
-  border-left: 1px solid #a8a8a8;
-  border-top: 1px solid #a8a8a8;
-  border-right: 1px solid #888888;
-  border-bottom: 1px solid #888888;
+  border: 1px solid #fff;
   border-radius: 4px;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
 }
-#header a:hover, #header_contextual a:hover
-{
-  background: #8c8c8c;
-  border-left: 1px solid #444;
-  border-top: 1px solid #444;
-  border-right: 1px solid #ccc;
-  border-bottom: 1px solid #ccc;
-}
+#header a:hover, #header_contextual a:hover { border: 1px solid #bbb; background: #ddd; }
+#header a:active, #header_contextual a:active { border: 1px solid #aaa; background: #eee; }
 #header #logout_link { color: #800; text-shadow: #caa 0 1px 1px; }
 #context { float: left; }
 
-#login_form
-{
+#login_form {
   width: 600px;
   margin: auto;
 }
 #login_form ol { list-style: none; margin-top: 0.5em; }
 #login_form li { margin-bottom: 0.8em; }
-#login_form label
-{
+#login_form label {
   float: left;
   width: 20%;
   text-align: right;
