@@ -2,6 +2,7 @@
 
 - content_for(:header) do
   = render 'form'
+  = render 'entries/summary'
 
 - unless @tags.empty?
   - content_for(:sidebar) do
