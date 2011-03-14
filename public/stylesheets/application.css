@@ -16,7 +16,15 @@ ul { margin-left: 2em; }
   border: 2px inset #f00;
 }
 
-#container { overflow: auto; }
+#container, #sidebar {
+  position: fixed;
+  overflow: auto;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+#sidebar { width: 25%; }
 
 #flash_notice, #flash_alert {
   text-align: center;
@@ -93,10 +101,7 @@ ul { margin-left: 2em; }
 .grid thead tr .sort_asc { background: #eee url(/images/asc.gif) no-repeat center right; }
 .grid thead tr .sort_desc { background: #eee url(/images/desc.gif) no-repeat center right; }
 
-#entries {
-  width: 75%;
-  float: right;
-}
+#entries { width: 100%; }
 #entries tr:hover { background: #ddd; }
 #entries .expense, #entries .expense a { color: #800; }
 #entries .income, #entries .income a { color: #080; }
@@ -108,17 +113,10 @@ ul { margin-left: 2em; }
   background: #ffc;
   border: 1px solid #cc8;
 }
-#entries .income a.tag { background: #cfc; border: 1px solid #8c8; }
+#tags .income a.tag, #entries .income a.tag { background: #cfc; border: 1px solid #8c8; }
 #entries .entry { margin-right: 8px; }
 #entries thead .comment { text-align: left; padding-left: 0.5em; }
 
-#sidebar {
-  width: 25%;
-}
-#sidebar > * { float: left; }
-#tags {
-  margin-top: 5em;
-}
 #tags ul { list-style-type: none; }
 #tags li { text-align: left; padding: 2px; }
 #tags span { float: left; width: 6em; text-align: right; }

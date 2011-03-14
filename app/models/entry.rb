@@ -1,3 +1,5 @@
+class MatchingSignatureError < StandardError; end
+
 class Entry < ActiveRecord::Base
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
@@ -62,10 +64,12 @@ class Entry < ActiveRecord::Base
       if e.tag_names == self.tag_names
         e.amount += self.amount
         e.comment += ", %s" % self.comment
-        e.save!
-        return false
+        e.edit_history.concat(self.edit_history)
+        self.destroy unless self.new_record?
+        return e.save
       end
     end
+
     super(*args)
   end
 

@@ -28,10 +28,17 @@ class EntriesController < ApplicationController
       @last_milestone = Milestone.last(:conditions => ["created_at < ?", Date.today])
     end
     @entries = e
-    @tags = Hash.new(0)
+    @tags = {
+      :incomings => Hash.new(0),
+      :expenses => Hash.new(0)
+    }
     @entries.each do |i|
       i.tags.each do |t|
-        @tags[t] += i.amount if i.amount < 0
+        if i.amount < 0
+          @tags[:expenses][t] += i.amount
+        else
+          @tags[:incomings][t] += i.amount
+        end
       end
     end
   end
@@ -49,7 +56,7 @@ class EntriesController < ApplicationController
     @entry = Entry.new(params[:entry])
     @entry.edit_history << [current_user.id, Time.now]
     if @entry.save
-      redirect_to entries_url, :notice => "Successfully created entry."
+      redirect_to entries_url, :notice => "Successfully added an entry."
     else
       render :action => 'new'
     end

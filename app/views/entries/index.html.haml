@@ -5,11 +5,6 @@
 
 - unless @tags.empty?
   - content_for(:sidebar) do
-    #tags
-      %ul
-        - @tags.sort{ |a, b| a[1] <=> b[1] }.each do |t, amount|
-          %li
-            %span.amount= "%0.2f" % amount.to_f
-            = link_to t.name, t, :class => 'tag'
+    = render 'tags/list'
 
 = render 'list'

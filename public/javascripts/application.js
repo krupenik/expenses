@@ -20,10 +20,13 @@ var App = {
       if (null != (prevs[0] = c[0].previousElementSibling)) {
         while (null != (prevs[prevs.length] = prevs[prevs.length - 1].previousElementSibling));
       }
-      c.css({
-        position: "fixed", left: 0, right: 0, bottom: 0,
-        top: prevs.map(function(e) { return $(e).outerHeight(true); }).reduce(function(a, e) { return a + e; }) || 0,
-      });
+      var top = prevs.map(function(e) { return $(e).outerHeight(true); }).reduce(function(a, e) { return a + e; }) || 0;
+      var sidebar_width = 0;
+      var s = $("#sidebar"); if (s[0]) {
+        sidebar_width = s.width();
+        s.css({top: top, right: sidebar_width});
+      }
+      c.css({left: sidebar_width, top: top});
     }
   },
 
