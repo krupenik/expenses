@@ -105,7 +105,8 @@ ul { margin-left: 2em; }
 #entries tr:hover { background: #ddd; }
 #entries .expense, #entries .expense a { color: #800; }
 #entries .income, #entries .income a { color: #080; }
-#entries a.tag, #tags a.tag {
+#entries a.tag, #tags a.tag, #cloud span.tag {
+  white-space: nowrap;
   color: #000;
   padding: 0 4px 1px;
   margin: 2px;
@@ -169,6 +170,8 @@ ul { margin-left: 2em; }
 #header a:active, #header_contextual a:active { border: 1px solid #aaa; background: #eee; }
 #header #logout_link { color: #800; text-shadow: #caa 0 1px 1px; }
 #context { float: left; }
+#context form { float: left; }
+#milestone_form { margin-left: 2em; }
 
 #login_form {
   width: 600px;
@@ -191,7 +194,8 @@ ul { margin-left: 2em; }
 #tags_filter_form input { padding: 3px; font-size: 1em; }
 
 #cloud { padding: 20px; line-height: 2.5em; }
-#cloud a { color: #000; white-space: nowrap; height: 0; margin: 0 0.1em; }
+#cloud a { color: #000; }
+#cloud span.amount { font-size: 75%; }
 #cloud_switcher { text-align: center; }
 #cloud_switcher span { cursor: pointer; margin: 0.5em; padding: 2px 6px; }
 #cloud_switcher .selected { background: #ebebaf; }

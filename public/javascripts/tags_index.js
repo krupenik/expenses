@@ -30,8 +30,8 @@ $(function() {
     for (i in tags) {
       if (tags_data[i]) {
         a = $("<a class='cl-" + f_int(10 * (tags_data[i] - 1) / max_value) +
-          "' href='" + tag_path.replace("%s", tags[i]) + "'>" +
-          tags[i] + " (" + data_f(tags_data[i]) + ")</a>");
+          "' href='" + tag_path.replace("%s", tags[i]) + "'><span class=\"tag\">" +
+          tags[i] + "</span><span class=\"amount\">" + data_f(tags_data[i]) + "</span></a>");
         $cloud.append(a);
         $cloud.append(" ");
       }
