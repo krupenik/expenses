@@ -89,4 +89,14 @@ class EntriesController < ApplicationController
     apply_context params
     redirect_to request.referer
   end
+
+  def set_milestone
+    redirect_to root_url unless request.referer
+    begin
+      Milestone.set(Date.today.beginning_of_month - 1)
+    rescue Milestone::IntervalError => e
+      flash[:notice] = e.to_s
+    end
+    redirect_to request.referer
+  end
 end

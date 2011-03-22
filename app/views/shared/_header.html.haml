@@ -9,6 +9,10 @@
           = text_field_tag 'f_created_at_f', session[:context][:date][1][1], :class => 'datepicker', :size => 11
         = submit_tag 'apply', :id => 'context_apply'
         = submit_tag 'reset', :id => 'context_reset'
+      - unless @last_milestone.nil?
+        - if Milestone::MinInterval < Date.today - @last_milestone.created_at
+          = form_tag milestone_path, :method => :post, :id => 'milestone_form' do
+            = submit_tag 'set milestone', :id => 'milestone_set'
 
     = current_user.email
     = link_to 'Entries', entries_path

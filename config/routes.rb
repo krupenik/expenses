@@ -6,6 +6,7 @@ Expenses::Application.routes.draw do
 
   get '/calendar' => 'entries#calendar', :as => :calendar
   post '/context' => 'entries#set_context', :as => :context
+  post '/milestone' => 'entries#set_milestone', :as => :milestone
 
   root :to => "entries#index"
 end

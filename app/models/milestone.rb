@@ -1,4 +1,6 @@
 class Milestone < ActiveRecord::Base
+  MinInterval = 27
+
   class IntervalError < Exception; end
 
   def self.set(date = Date.today)
@@ -8,7 +10,7 @@ class Milestone < ActiveRecord::Base
     )
     prev_date = prev_milestone.created_at + 1 rescue nil
     prev_amount = prev_milestone.amount rescue 0
-    raise IntervalError, "too small" if (prev_date && 28 >= (date - prev_date))
+    raise IntervalError, "Interval between milestones is too small" if (prev_date && MinInterval > (date - prev_date))
     amounts = Entry.created_at(prev_date, date).scoped(:select => 'amount').map(&:amount)
     return Milestone.create(
       :incomings => amounts.select{ |i| i > 0 }.sum + prev_amount,
