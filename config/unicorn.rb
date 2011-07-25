@@ -1,20 +1,24 @@
-worker_processes 2
-user "dennis"
+worker_processes 4
+user "nobody", "nogroup"
 
-APP_ROOT = "/Users/dennis/code/expenses"
+APP_ROOT = "/var/www/expenses"
 
 working_directory APP_ROOT
-listen "#{APP_ROOT}/tmp/sockets/unicorn.sock", :backlog => 64
+listen "#{APP_ROOT}/tmp/sockets/unicorn.sock", :backlog => 1024
 timeout 30
 pid "#{APP_ROOT}/tmp/pids/unicorn.pid"
 stderr_path "#{APP_ROOT}/log/unicorn-stderr.log"
 stdout_path "#{APP_ROOT}/log/unicorn-stdout.log"
 
 preload_app true
-GC.respond_to?(:copy_on_write_friendly=) and GC.copy_on_write_friendly = true
+if GC.respond_to?(:copy_on_write_friendly=)
+  GC.copy_on_write_friendly = true
+end
 
 before_fork do |server, worker|
-  defined?(ActiveRecord::Base) and ActiveRecord::Base.connection.disconnect!
+  if defined?(ActiveRecord::Base)
+    ActiveRecord::Base.connection.disconnect!
+  end
 
   old_pidfile = "#{APP_ROOT}/tmp/pids/unicorn.pid.oldbin"
   if File.exists?(old_pidfile) && server.pid != old_pid
@@ -26,5 +30,8 @@ before_fork do |server, worker|
 end
 
 after_fork do |server, worker|
-  defined?(ActiveRecord::Base) and ActiveRecord::Base.establish_connection
+  if defined?(ActiveRecord::Base)
+    ActiveRecord::Base.establish_connection
+  end
 end
+
