@@ -2,7 +2,7 @@
 
 [ -d 'app' ] || (echo "not in rails project directory" && exit 1)
 
-SRV=freya.krupenik.com
+SRV=dutch.krupenik.com
 FN=expenses-db-`date +"%Y%m%d%H%M%S"`
 DMP=/tmp/$FN
 DB="-U expenses expenses"
