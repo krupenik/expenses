@@ -5,6 +5,7 @@ Capfile
 config/database.yml
 config/deploy.rb
 config/initializers/secret_token.rb
+config/unicorn.rb
 db/schema.rb
 Gemfile.lock
 log/*.log
