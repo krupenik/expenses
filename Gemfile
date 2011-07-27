@@ -6,4 +6,5 @@ gem 'haml'
 gem 'devise'
 gem 'dynamic_form'
 gem 'table_builder'
+gem 'unicorn'
 
