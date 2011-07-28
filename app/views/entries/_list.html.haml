@@ -7,7 +7,13 @@
       %th amount
       %th.comment comment
   %tbody
-    = render @entries
+    - for entry in @entries do
+      %tr{:class => ["expense", nil, "income"][(entry.amount <=> 0) + 1]}
+        %td.date= link_to entry.created_at, entries_path(:f_created_at => entry.created_at)
+        %td.amount= "%0.2f" % entry.amount
+        %td.comment{"data-id" => entry.id}
+          = link_to(entry.comment, edit_entry_path(entry), :class => 'entry')
+          = entry.tags.compact.sort_by(&:id).map { |t| link_to t.name, t, :class => 'tag' }.join('').html_safe
   %tfoot
     %tr
 
