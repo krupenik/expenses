@@ -120,33 +120,6 @@ ul { margin-left: 2em; }
 #tags li { text-align: left; padding: 2px; }
 #tags span { float: left; width: 6em; text-align: right; }
 
-#calendar { margin: 20px auto; width: 75em; }
-#calendar #month { text-align: center; }
-#calendar table { border-collapse: collapse; width: 100%; }
-#calendar thead th {
-  border: 1px solid #888;
-  padding: 4px;
-  background: #444;
-  color: #fff;
-  width: 14.2857142857143%;
-}
-#calendar td { border: 1px solid #888; height: 5em; }
-#calendar .weekend { background: #ccc; }
-#calendar .today { background: #aaf; }
-#calendar .day {
-  float: left;
-  margin: -1.8em 0 0 -1px;
-  padding: 2px;
-  border: 1px solid #888;
-  background: #ccc;
-}
-#calendar .sum { text-align: center; font-size: 1.5em; }
-#calendar .sum a { color: #00c; text-decoration: none; }
-#calendar .sum.income a { color: #0c0; }
-#calendar .sum.expense a { color: #c00; }
-#calendar .notmonth, #calendar .notmonth a { color: #aaa; }
-#calendar #summary { font-size: 1.5em; }
-
 #summary { text-align: center; font-size: 2em; font-weight: bold; line-height: 1.5em; }
 
 #header, #header_contextual {
@@ -208,3 +181,5 @@ ul { margin-left: 2em; }
 .cl-7 { font-size: 2.75em; }
 .cl-8 { font-size: 3em; }
 .cl-9 { font-size: 3em; font-weight: bold; }
+
+#ui-datepicker-div { display: none; }

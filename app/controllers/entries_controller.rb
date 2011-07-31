@@ -43,11 +43,6 @@ class EntriesController < ApplicationController
     end
   end
 
-  def calendar
-    @date = Date.strptime(params[:date], "%Y-%m") rescue Date.today
-    @entries = Entry.created_at(@date.beginning_of_month, @date.end_of_month)
-  end
-
   def new
     @entry = Entry.new
   end

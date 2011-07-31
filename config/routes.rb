@@ -4,7 +4,6 @@ Expenses::Application.routes.draw do
   resources :entries
   resources :tags
 
-  get '/calendar' => 'entries#calendar', :as => :calendar
   post '/context' => 'entries#set_context', :as => :context
   post '/milestone' => 'entries#set_milestone', :as => :milestone
 
