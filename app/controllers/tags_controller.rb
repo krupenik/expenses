@@ -14,9 +14,9 @@ class TagsController < ApplicationController
     @entries = []
     begin
       e = parse_tag_expr(@tag_list)
-      tags = Hash[Tag.where(:name => e.reject{ |i| i =~ /[!\(\)|,]/ }.compact)
-        .includes(:entries => :tags).merge(Entry.created_at(*session[:context][:date][1]))
-        .map{ |i| [i.name, i.entries] }]
+      tags = Hash[Tag.where(:name => e.reject{ |i| i =~ /[!\(\)|,]/ }.compact).
+        includes(:entries => :tags).merge(Entry.created_at(*session[:context][:date][1])).
+        map{ |i| [i.name, i.entries] }]
       stack = []
       e.each do |i|
         case i
