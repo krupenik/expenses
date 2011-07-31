@@ -1,13 +1,10 @@
 class Milestone < ActiveRecord::Base
+  class IntervalError < StandardError; end
+
   MinInterval = 27
 
-  class IntervalError < Exception; end
-
   def self.set(date = Date.today)
-    prev_milestone = Milestone.first(
-      :conditions => ['created_at <= ?', date],
-      :order => 'created_at desc', :limit => 1
-    )
+    prev_milestone = Milestone.where('created_at <= ?', date).last
     prev_date = prev_milestone.created_at + 1 rescue nil
     prev_amount = prev_milestone.amount rescue 0
     raise IntervalError, "Interval between milestones is too small" if (prev_date && MinInterval > (date - prev_date))

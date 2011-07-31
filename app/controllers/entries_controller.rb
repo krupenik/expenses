@@ -25,7 +25,7 @@ class EntriesController < ApplicationController
     e = e.created_at(*session[:context][:date][1])
 
     if session[:context][:date][0].nil?
-      @last_milestone = Milestone.last(:conditions => ["created_at < ?", Date.today])
+      @last_milestone = Milestone.where('created_at <= ?', Date.today).last
     end
     @entries = e
     @tags = {

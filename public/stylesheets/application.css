@@ -37,7 +37,7 @@ ul { margin-left: 2em; }
   border-width: 1px 0;
 }
 
-#flash_error, #flash_alert {
+#flash_alert {
   background-color: #fcc;
   border: #f66 solid;
   border-width: 1px 0;
@@ -93,10 +93,8 @@ ul { margin-left: 2em; }
   border-left: 1px solid #fff;
   border-right: 1px solid #fff;
 }
-.grid .id { width: 3em; text-align: center; }
 .grid .date { width: 10em; text-align: center; }
 .grid .amount { width: 6em; text-align: right; }
-.grid .tags { width: 30%; }
 .grid thead tr .header { background: #eee url(/images/bg.gif) no-repeat center right; cursor: pointer; }
 .grid thead tr .sort_asc { background: #eee url(/images/asc.gif) no-repeat center right; }
 .grid thead tr .sort_desc { background: #eee url(/images/desc.gif) no-repeat center right; }

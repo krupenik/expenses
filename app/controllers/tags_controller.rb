@@ -4,7 +4,7 @@ class TagsController < ApplicationController
   before_filter :authenticate_user!
 
   def index
-    @tags = Tag.all(:include => :entries, :conditions => Entry.created_at_conditions(*session[:context][:date][1])).sort_by(&:name)
+    @tags = Tag.includes(:entries).merge(Entry.created_at(*session[:context][:date][1])).sort_by(&:name)
     @tags_appearance_rates = Hash[@tags.map{ |i| [i.id, i.entries.size] }]
     @tags_expenses = Hash[@tags.map{ |i| [i.id, i.entries.map{ |i| i.amount if i.amount < 0 }.compact.inject{ |a, e| a + e }.to_f.abs]}].reject{ |k, v| 0 == v }
   end
@@ -14,9 +14,9 @@ class TagsController < ApplicationController
     @entries = []
     begin
       e = parse_tag_expr(@tag_list)
-      tags = Hash[Tag.find_all_by_name(e.reject{ |i| i =~ /[!\(\)|,]/ }.compact,
-        :include => {:entries => :tags}, :conditions => Entry.created_at_conditions(*session[:context][:date][1])
-        ).map{ |i| [i.name, i.entries] }]
+      tags = Hash[Tag.where(:name => e.reject{ |i| i =~ /[!\(\)|,]/ }.compact)
+        .includes(:entries => :tags).merge(Entry.created_at(*session[:context][:date][1]))
+        .map{ |i| [i.name, i.entries] }]
       stack = []
       e.each do |i|
         case i

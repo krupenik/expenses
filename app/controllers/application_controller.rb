@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   def default_context
     {
       :type => nil,
-      :date => [nil, [Milestone.last(:conditions => ["created_at < ?", Date.today]).try(:created_at).try(:tomorrow), nil]],
+      :date => [nil, [Milestone.where("created_at < ?", Date.today).last.try(:created_at).try(:tomorrow), nil]],
     }
   end
 

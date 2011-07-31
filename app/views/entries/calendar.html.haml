@@ -9,9 +9,9 @@
 
   = render 'summary'
 
-  - calendar_for(@entries.to_a, :date => @date.year, :month => @date.month, :first_day_of_week => 1) do |cal|
+  = calendar_for(@entries.to_a, :date => @date.year, :month => @date.month, :first_day_of_week => 1) do |cal|
     = cal.head('Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
-    - cal.day(:day_method => :created_at) do |day, entries|
+    = cal.day(:day_method => :created_at) do |day, entries|
       %span.day= day.day
       - sum = entries.map(&:amount).sum
       .sum{:class => ["expense", nil, "income"][(sum <=> 0) + 1]}= link_to "%0.2f" % sum, entries_path(:f_created_at => day)

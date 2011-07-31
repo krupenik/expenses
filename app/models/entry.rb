@@ -1,34 +1,33 @@
-class MatchingSignatureError < StandardError; end
-
 class Entry < ActiveRecord::Base
+  class MilestoneSetError < StandardError; end
+
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
 
   attr_accessible :amount, :comment, :created_at, :tag_names
   attr_writer :tag_names
+  before_validation :check_milestone
   after_save :assign_tags
   serialize :edit_history, Array
 
   validates_numericality_of :amount, :on => :create, :message => "is not a number"
   validates_presence_of :comment, :on => :create, :message => "can't be blank"
 
-  scope :created_at, lambda{ |*args| {:conditions => created_at_conditions(*args)} }
+  scope :expenses, where("#{self.table_name}.amount < 0")
+  scope :incomings, where("#{self.table_name}.amount > 0")
 
-  scope :expenses, :conditions => "amount < 0"
-  scope :incomings, :conditions => "amount > 0"
-
-  def self.created_at_conditions(*args)
+  def self.created_at(*args)
     args = *args if args[0].is_a?(Array)
     if args.compact.empty?
-      nil
+      scoped
     elsif 1 == args.size
-      ["#{self.table_name}.created_at = ?", args[0]]
+      where(:created_at => args[0])
     else
       (s, f) = args
-      _conditions = []
-      _conditions << "#{self.table_name}.created_at >= ?" unless s.nil?
-      _conditions << "#{self.table_name}.created_at <= ?" unless f.nil?
-      [_conditions.join(" AND "), [s, f].compact].flatten
+      entries = scoped
+      entries = entries.where("#{self.table_name}.created_at >= ?", s) unless s.nil?
+      entries = entries.where("#{self.table_name}.created_at <= ?", f) unless f.nil?
+      entries
     end
   end
 
@@ -56,9 +55,9 @@ class Entry < ActiveRecord::Base
 
   def save(*args)
     if self.new_record?
-      possible_matches = Entry.where("created_at = ?", self.created_at)
+      possible_matches = Entry.where(:created_at => self.created_at)
     else
-      possible_matches = Entry.where("created_at = ? and id != ?", self.created_at, self.id)
+      possible_matches = Entry.where(:created_at => self.created_at).where("id != ?", self.id)
     end
     possible_matches.each do |e|
       if e.tag_names == self.tag_names
@@ -74,6 +73,10 @@ class Entry < ActiveRecord::Base
   end
 
   private
+
+  def check_milestone
+    raise MilestoneSetError if self.amount_changed? and Milestone.where("created_at >= ?", self.created_at).first
+  end
 
   def assign_tags
     if @tag_names
