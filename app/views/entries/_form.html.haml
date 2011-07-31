@@ -1,6 +1,6 @@
 - @entry ||= Entry.new(:created_at => Date.today, :amount => 0.0)
 
-#error_messages= error_messages_for 'entry'
+= error_messages_for @entry
 
 = form_for(@entry) do |f|
   = f.text_field :created_at, :size => 11

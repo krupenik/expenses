@@ -1,17 +1,15 @@
 class Entry < ActiveRecord::Base
-  class MilestoneSetError < StandardError; end
-
   has_many :taggings, :dependent => :destroy
   has_many :tags, :through => :taggings
 
   attr_accessible :amount, :comment, :created_at, :tag_names
   attr_writer :tag_names
-  before_validation :check_milestone
   after_save :assign_tags
   serialize :edit_history, Array
 
-  validates_numericality_of :amount, :on => :create, :message => "is not a number"
-  validates_presence_of :comment, :on => :create, :message => "can't be blank"
+  validates_numericality_of :amount
+  validates_presence_of :comment
+  validate :unsealed_creation_date
 
   scope :expenses, where("#{self.table_name}.amount < 0")
   scope :incomings, where("#{self.table_name}.amount > 0")
@@ -54,10 +52,9 @@ class Entry < ActiveRecord::Base
   end
 
   def save(*args)
-    if self.new_record?
-      possible_matches = Entry.where(:created_at => self.created_at)
-    else
-      possible_matches = Entry.where(:created_at => self.created_at).where("id != ?", self.id)
+    possible_matches = Entry.where(:created_at => self.created_at).includes(:tags)
+    unless self.new_record?
+      possible_matches = possible_matches.where("id != ?", self.id)
     end
     possible_matches.each do |e|
       if e.tag_names == self.tag_names
@@ -74,8 +71,10 @@ class Entry < ActiveRecord::Base
 
   private
 
-  def check_milestone
-    raise MilestoneSetError if self.amount_changed? and Milestone.where("created_at >= ?", self.created_at).first
+  def unsealed_creation_date
+    if self.amount_changed? and m = Milestone.where("created_at >= ?", self.created_at).first
+      errors.add(:base, "This period is sealed at #{m.created_at}")
+    end
   end
 
   def assign_tags

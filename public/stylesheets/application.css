@@ -11,10 +11,6 @@ h3 { margin-top: 3em; margin-bottom: 0.5em; }
 ul { margin-left: 2em; }
 
 .clear { clear: both; height: 0; overflow: hidden; }
-.fieldWithErrors { display: inline; }
-.fieldWithErrors * {
-  border: 2px inset #f00;
-}
 
 #container, #sidebar {
   position: fixed;
@@ -30,46 +26,35 @@ ul { margin-left: 2em; }
   text-align: center;
   padding: 5px 0;
 }
-
 #flash_notice {
   background-color: #cfc;
   border: #6c6 solid;
   border-width: 1px 0;
 }
-
 #flash_alert {
   background-color: #fcc;
   border: #f66 solid;
   border-width: 1px 0;
 }
 
-#errorExplanation {
-  width: 50%;
+#error_messages {
+  width: 90%;
   margin: 10px auto;
   border: 1px solid #c00;
   padding: 0px;
-  padding-bottom: 12px;
   background-color: #f0f0f0;
-  font-size: 0.8em;
 }
-
-#errorExplanation h2 {
+#error_messages h2 {
   text-align: center;
   font-weight: bold;
   padding: 5px;
   margin: 0;
   background-color: #c00;
   color: #fff;
-  font-size: 1em;
+  font-size: 1.2em;
 }
-
-#errorExplanation p {
-  color: #333;
-  margin-bottom: 0;
-  padding: 8px;
-}
-
-#errorExplanation ul { margin: 2px 24px; list-style: disc; }
+#error_messages p { margin: 0 8px; }
+#error_messages ul { margin: 0 16px; padding: 0; list-style: none; }
 
 .edit_entry { margin: 2px; }
 .new_entry input, .edit_entry input { font-size: 1.2em; padding: 2px; }
@@ -81,12 +66,10 @@ ul { margin-left: 2em; }
   border-collapse: collapse;
   margin: 1px 0;
 }
-
 .grid td, .grid th {
   padding: 4px 10px;
   vertical-align: top;
 }
-
 .grid thead th, .grid tfoot th {
   font-size: 1.2em;
   padding: 4px;
@@ -112,9 +95,9 @@ ul { margin-left: 2em; }
   background: #ffc;
   border: 1px solid #cc8;
 }
-#tags .income a.tag, #entries .income a.tag { background: #cfc; border: 1px solid #8c8; }
 #entries .entry { margin-right: 8px; }
 #entries thead .comment { text-align: left; padding-left: 0.5em; }
+#tags .income a.tag, #entries .income a.tag { background: #cfc; border: 1px solid #8c8; }
 
 #tags ul { list-style-type: none; }
 #tags li { text-align: left; padding: 2px; }
