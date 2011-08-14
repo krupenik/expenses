@@ -11,8 +11,8 @@ class Entry < ActiveRecord::Base
   validates_presence_of :comment
   validate :unsealed_creation_date
 
-  scope :expenses, where("#{self.table_name}.amount < 0")
-  scope :incomings, where("#{self.table_name}.amount > 0")
+  scope :expenses, where("#{table_name}.amount < 0")
+  scope :incomings, where("#{table_name}.amount > 0")
 
   def self.created_at(*args)
     args = *args if args[0].is_a?(Array)
@@ -23,8 +23,8 @@ class Entry < ActiveRecord::Base
     else
       (s, f) = args
       entries = scoped
-      entries = entries.where("#{self.table_name}.created_at >= ?", s) unless s.nil?
-      entries = entries.where("#{self.table_name}.created_at <= ?", f) unless f.nil?
+      entries = entries.where("#{table_name}.created_at >= ?", s) unless s.nil?
+      entries = entries.where("#{table_name}.created_at <= ?", f) unless f.nil?
       entries
     end
   end
@@ -38,7 +38,7 @@ class Entry < ActiveRecord::Base
     unless @tag_names.blank?
       @tag_names.split(/\s*,\s*/)
     else
-      self.tags.map(&:name)
+      tags.map(&:name)
     end.sort.join(", ")
   end
 
@@ -52,16 +52,16 @@ class Entry < ActiveRecord::Base
   end
 
   def save(*args)
-    possible_matches = Entry.where(:created_at => self.created_at).includes(:tags)
-    unless self.new_record?
-      possible_matches = possible_matches.where("id != ?", self.id)
+    possible_matches = Entry.where(:created_at => created_at).includes(:tags)
+    unless new_record?
+      possible_matches = possible_matches.where("id != ?", id)
     end
     possible_matches.each do |e|
-      if e.tag_names == self.tag_names
-        e.amount += self.amount
-        e.comment += ", %s" % self.comment
-        e.edit_history.concat(self.edit_history)
-        self.destroy unless self.new_record?
+      if e.tag_names == tag_names
+        e.amount += amount
+        e.comment += ", %s" % comment
+        e.edit_history.concat(edit_history)
+        destroy unless new_record?
         return e.save
       end
     end
