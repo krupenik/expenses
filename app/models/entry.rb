@@ -10,6 +10,7 @@ class Entry < ActiveRecord::Base
   validates_numericality_of :amount
   validates_presence_of :comment
   validate :unsealed_creation_date
+  before_destroy :check_for_milestone_after_me
 
   scope :expenses, where("#{table_name}.amount < 0")
   scope :incomings, where("#{table_name}.amount > 0")
@@ -71,10 +72,15 @@ class Entry < ActiveRecord::Base
 
   private
 
-  def unsealed_creation_date
-    if self.amount_changed? and m = Milestone.where("created_at >= ?", self.created_at).first
-      errors.add(:base, "This period is sealed at #{m.created_at}")
+  def check_for_milestone_after_me
+    if m = Milestone.where("created_at >= ?", created_at).first
+      errors.add(:base, "This date was sealed at #{m.created_at}")
+      return false
     end
+  end
+
+  def unsealed_creation_date
+    (amount_changed? or created_at_changed?) and check_for_milestone_after_me
   end
 
   def assign_tags

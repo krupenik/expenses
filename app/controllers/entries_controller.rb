@@ -14,7 +14,7 @@ class EntriesController < ApplicationController
       redirect_to entries_path
     end
 
-    e = Entry.scoped(:include => :tags, :order => 'id desc')
+    e = Entry.includes(:tags)
 
     if 'expenses' == session[:context][:type]
       e = e.expenses
@@ -27,18 +27,13 @@ class EntriesController < ApplicationController
     if session[:context][:date][0].nil?
       @last_milestone = Milestone.where('created_at <= ?', Date.today).last
     end
+
     @entries = e
-    @tags = {
-      :incomings => Hash.new(0),
-      :expenses => Hash.new(0)
-    }
-    @entries.each do |i|
-      i.tags.each do |t|
-        if i.amount < 0
-          @tags[:expenses][t] += i.amount
-        else
-          @tags[:incomings][t] += i.amount
-        end
+    @tags = {:incomings => Hash.new(0), :expenses => Hash.new(0)}
+    @entries.each do |entry|
+      entry.tags.each do |tag|
+        type = entry.amount < 0 ? :expenses : :incomings
+        @tags[type][tag] += entry.amount
       end
     end
   end

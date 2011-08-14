@@ -1,6 +1,7 @@
 .*.swp
 .bundle
 .DS_Store
+.rvmrc
 Capfile
 config/database.yml
 config/deploy.rb
