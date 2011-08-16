@@ -14,7 +14,7 @@ class EntriesController < ApplicationController
       redirect_to entries_path
     end
 
-    e = Entry.includes(:tags)
+    e = Entry.includes(:tags).order('id desc')
 
     if 'expenses' == session[:context][:type]
       e = e.expenses
